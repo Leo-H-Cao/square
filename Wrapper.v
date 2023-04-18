@@ -24,8 +24,10 @@
  *
  **/
 
-module Wrapper (clock, reset);
+module Wrapper (clock, reset, left_edge, right_edge, left_score, right_score);
 	input clock, reset;
+	input [31:0] left_edge, right_edge;
+	output [31:0] left_score, right_score;
 
 	wire rwe, mwe;
 	wire[4:0] rd, rs1, rs2;
@@ -33,9 +35,8 @@ module Wrapper (clock, reset);
 		rData, regA, regB,
 		memAddr, memDataIn, memDataOut;
 
-
 	// ADD YOUR MEMORY FILE HERE
-	localparam INSTR_FILE = "";
+	localparam INSTR_FILE = "square";
 	
 	// Main Processing Unit
 	processor CPU(.clock(clock), .reset(reset), 
@@ -63,7 +64,8 @@ module Wrapper (clock, reset);
 		.ctrl_writeEnable(rwe), .ctrl_reset(reset), 
 		.ctrl_writeReg(rd),
 		.ctrl_readRegA(rs1), .ctrl_readRegB(rs2), 
-		.data_writeReg(rData), .data_readRegA(regA), .data_readRegB(regB));
+		.data_writeReg(rData), .data_readRegA(regA), .data_readRegB(regB),
+		.ball_left_data(left_edge), .ball_right_data(right_edge), .left_sc(left_score), .right_sc(right_score));
 						
 	// Processor Memory (RAM)
 	RAM ProcMem(.clk(clock), 
