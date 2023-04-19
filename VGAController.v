@@ -94,10 +94,13 @@ module VGAController(
 	assign colorOut = active ? (x > square_left && x < square_right && y > square_top && y < square_bottom ? (outSprite ? 12'b11111111111 : 12'b0) : colorData) : 12'd0;
 	// Quickly assign the output colors to their channels using concatenation
 	assign {VGA_R, VGA_G, VGA_B} = colorOut;
-	wire [31:0] leftsc, rightsc;
-	Wrapper wr(clk, reset, square_left, square_right, leftsc, rightsc);
-	assign lefts = leftsc[7:0];
-	assign rights = rightsc[7:0];
+	reg [31:0] leftsc, rightsc;
+	wire [31:0] left_sc, right_sc;
+	assign left_sc = leftsc;
+	assign right_sc = rightsc;
+	Wrapper wr(clk, reset, square_left, square_right, left_sc, right_sc);
+	assign lefts = left_sc[7:0];
+	assign rights = right_sc[7:0];
 
 	//reference points
 	wire[9:0] x;
@@ -124,14 +127,12 @@ module VGAController(
 		end else if (down) begin
 			square_y <= square_y+1;
 		end
-		// if (square_x < 158) begin
-		//      square_x <= 270;
-		//      square_y <= 240;
-		// end
-		// if (square_x > 430) begin
-		//      square_x <= 270;
-		//      square_y <= 240;
-		// end
+		if (square_x < 160) begin
+		     rightsc <= rightsc + 1;
+		end
+		if (square_x > 430) begin
+		     leftsc <= leftsc + 1;
+		end
 		
 
 		square_left <= square_x;
