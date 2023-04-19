@@ -35,14 +35,14 @@ module regfile (
 	genvar i;
 	generate
 		for(i = 1; i < 32 ; i = i + 1) begin: loop1
-			if (i==20) begin
+			if (i==3) begin
 				wire [31:0] ball_right_out;
 				register b_reg1(ball_right_data, ball_right_out, clock, 1'b1, ctrl_reset);
 				tri_state tri_state1(ball_right_out, select_read1[i], data_readRegA);
 				tri_state tri_state2(ball_right_out, select_read2[i], data_readRegB);
 			end
 
-			if (i==21) begin
+			if (i==4) begin
 				wire [31:0] ball_left_out;
 				register b_reg2(ball_left_data, ball_left_out, clock, 1'b1, ctrl_reset);
 				tri_state tri_state3(ball_left_out, select_read1[i], data_readRegA);
@@ -50,7 +50,7 @@ module regfile (
 			end
 			
 
-			if(i != 20 && i !=21 && i != 1 && i != 2) begin
+			if(i != 3 && i !=4 && i != 1 && i != 2) begin
 				wire [31:0] reg_out;
 				register a_reg(data_writeReg, reg_out, clock, select_reg[i], ctrl_reset);
 				tri_state tri_state5(reg_out, select_read1[i], data_readRegA);
