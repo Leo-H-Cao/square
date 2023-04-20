@@ -96,9 +96,10 @@ module VGAController(
 	assign {VGA_R, VGA_G, VGA_B} = colorOut;
 	reg [31:0] leftsc, rightsc;
 	wire [31:0] left_sc, right_sc;
+	wire [31:0] l, r;
 	assign left_sc = leftsc;
 	assign right_sc = rightsc;
-	Wrapper wr(clk, reset, square_left, square_right, left_sc, right_sc);
+	Wrapper wr(clk, reset, square_left, square_right, l, r);
 	assign lefts = left_sc[7:0];
 	assign rights = right_sc[7:0];
 
@@ -108,14 +109,17 @@ module VGAController(
 
 	reg[9:0] square_x;
 	reg[8:0] square_y;
+	reg flag;
 
 	initial begin
 		square_x = 270;
 		square_y = 240;
+		flag = 1'b0;
 	end
 
 	reg [9:0] square_left, square_right;
 	reg [8:0] square_bottom, square_top;
+	
 
 	always @(posedge screenEnd)begin
 		if (left) begin
@@ -127,11 +131,17 @@ module VGAController(
 		end else if (down) begin
 			square_y <= square_y+1;
 		end
-		if (square_x < 160) begin
+		if (square_x < 160 & !flag) begin
 		     rightsc <= rightsc + 1;
+			 flag <= 1'b1;
 		end
-		if (square_x > 430) begin
+		if (square_x > 430 & !flag) begin
 		     leftsc <= leftsc + 1;
+			 flag <= 1'b1;
+		end
+
+		if (square_x > 160 && square_x < 430 & flag)begin
+			 flag <= 1'b0;
 		end
 		
 
