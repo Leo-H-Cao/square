@@ -1,0 +1,122 @@
+Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2021.1 (win64) Build 3247384 Thu Jun 10 19:36:33 MDT 2021
+| Date         : Sat Apr 22 15:05:31 2023
+| Host         : P2-01 running 64-bit major release  (build 9200)
+| Command      : report_control_sets -verbose -file VGAController_control_sets_placed.rpt
+| Design       : VGAController
+| Device       : xc7a100t
+------------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |    44 |
+|    Minimum number of control sets                        |    44 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |    50 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |    44 |
+| >= 0 to < 4        |     1 |
+| >= 4 to < 6        |     0 |
+| >= 6 to < 8        |     0 |
+| >= 8 to < 10       |     2 |
+| >= 10 to < 12      |     3 |
+| >= 12 to < 14      |     0 |
+| >= 14 to < 16      |     0 |
+| >= 16              |    38 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |              28 |           18 |
+| No           | No                    | Yes                    |             365 |          226 |
+| No           | Yes                   | No                     |               0 |            0 |
+| Yes          | No                    | No                     |              79 |           34 |
+| Yes          | No                    | Yes                    |            1030 |          495 |
+| Yes          | Yes                   | No                     |              24 |           13 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++----------------+-----------------------------------------------------------+-------------------------------------------------------------+------------------+----------------+--------------+
+|  Clock Signal  |                       Enable Signal                       |                       Set/Reset Signal                      | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------+-----------------------------------------------------------+-------------------------------------------------------------+------------------+----------------+--------------+
+| ~clk_IBUF_BUFG | wr/CPU/dx_latch/dx_ir_reg/loop1[2].a_dff/multdiv_latch_en | wr/CPU/md_logic/mult_div/mult/mult_counter/tff1/dff/q_reg_1 |                1 |              1 |         1.00 |
+|  clk_IBUF_BUFG | Display/squareX_reg[8][0]                                 |                                                             |                2 |              8 |         4.00 |
+|  clk_IBUF_BUFG | Display/E[0]                                              |                                                             |                2 |              8 |         4.00 |
+|  clk25         |                                                           | reset_IBUF                                                  |                4 |             10 |         2.50 |
+|  clk25         | Display/vPos                                              | reset_IBUF                                                  |                3 |             10 |         3.33 |
+|  clk_IBUF_BUFG | Display/vPos_reg[3]_0[0]                                  |                                                             |                8 |             10 |         1.25 |
+|  clk_IBUF_BUFG |                                                           | reset_IBUF                                                  |               15 |             20 |         1.33 |
+| ~clk_IBUF_BUFG | wr/CPU/dx_latch/dx_ir_reg/loop1[2].a_dff/multdiv_latch_en | wr/CPU/dx_latch/dx_ir_reg/loop1[2].a_dff/q_reg_4            |               13 |             24 |         1.85 |
+|  clk_IBUF_BUFG |                                                           |                                                             |               18 |             28 |         1.56 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_24        | reset_IBUF                                                  |               27 |             32 |         1.19 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_31        | reset_IBUF                                                  |               16 |             32 |         2.00 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_14        | reset_IBUF                                                  |               14 |             32 |         2.29 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_17        | reset_IBUF                                                  |               22 |             32 |         1.45 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_20        | reset_IBUF                                                  |               16 |             32 |         2.00 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_22        | reset_IBUF                                                  |               25 |             32 |         1.28 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_7         | reset_IBUF                                                  |               12 |             32 |         2.67 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_30        | reset_IBUF                                                  |               19 |             32 |         1.68 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_28        | reset_IBUF                                                  |               16 |             32 |         2.00 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_9         | reset_IBUF                                                  |               10 |             32 |         3.20 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_18        | reset_IBUF                                                  |               10 |             32 |         3.20 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_19        | reset_IBUF                                                  |               14 |             32 |         2.29 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_26        | reset_IBUF                                                  |               13 |             32 |         2.46 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_11        | reset_IBUF                                                  |               10 |             32 |         3.20 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_27        | reset_IBUF                                                  |               30 |             32 |         1.07 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_8         | reset_IBUF                                                  |               10 |             32 |         3.20 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_16        | reset_IBUF                                                  |               13 |             32 |         2.46 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_13        | reset_IBUF                                                  |               12 |             32 |         2.67 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_12        | reset_IBUF                                                  |               19 |             32 |         1.68 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_23        | reset_IBUF                                                  |               13 |             32 |         2.46 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_25        | reset_IBUF                                                  |               16 |             32 |         2.00 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_4         | reset_IBUF                                                  |                9 |             32 |         3.56 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_15        | reset_IBUF                                                  |               15 |             32 |         2.13 |
+|  clk_IBUF_BUFG | wr/CPU/dx_latch/dx_ir_reg/loop1[2].a_dff/en0              | reset_IBUF                                                  |               23 |             32 |         1.39 |
+|  clk_IBUF_BUFG | wr/RegisterFile/decoder_write/q_reg                       | reset_IBUF                                                  |               14 |             32 |         2.29 |
+|  clk_IBUF_BUFG | wr/RegisterFile/decoder_write/q_reg_0                     | reset_IBUF                                                  |               10 |             32 |         3.20 |
+|  clk_IBUF_BUFG | wr/RegisterFile/decoder_write/q_reg_1                     | reset_IBUF                                                  |               23 |             32 |         1.39 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_10        | reset_IBUF                                                  |               17 |             32 |         1.88 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_21        | reset_IBUF                                                  |                8 |             32 |         4.00 |
+|  clk_IBUF_BUFG | wr/CPU/mw_latch/mw_ir_reg/loop1[28].a_dff/q_reg_29        | reset_IBUF                                                  |               20 |             40 |         2.00 |
+| ~clk_IBUF_BUFG | wr/CPU/dx_latch/dx_ir_reg/loop1[2].a_dff/en0              | reset_IBUF                                                  |               15 |             51 |         3.40 |
+| ~clk_IBUF_BUFG | wr/CPU/dx_latch/dx_ir_reg/loop1[2].a_dff/multdiv_latch_en |                                                             |               22 |             53 |         2.41 |
+|  clk_IBUF_BUFG |                                                           | wr/CPU/dx_latch/dx_ir_reg/loop1[2].a_dff/q_reg_3            |               54 |             69 |         1.28 |
+|  clk_IBUF_BUFG |                                                           | wr/CPU/dx_latch/dx_ir_reg/loop1[2].a_dff/q_reg_2            |               41 |             69 |         1.68 |
+| ~clk_IBUF_BUFG |                                                           | reset_IBUF                                                  |              112 |            197 |         1.76 |
++----------------+-----------------------------------------------------------+-------------------------------------------------------------+------------------+----------------+--------------+
+
+

@@ -11,7 +11,10 @@ module VGAController(
 	inout ps2_data,
 	input [3:0] sw,
 	output [7:0] lefts,
-	output [7:0] rights
+	output [7:0] rights,
+	input [7:0] moveSpeed,
+	input player,
+	input startGame
 	);
 	
 	assign left = sw[3];
@@ -20,7 +23,7 @@ module VGAController(
 	assign down = sw[0];
 	
 	// Lab Memory Files Location
-	localparam FILES_PATH = "C:/Users/lhc22/Downloads/processor/processor/";
+	localparam FILES_PATH = "C:/Users/lhc22/Desktop/square/";
 
 	// Clock divider 100 MHz -> 25 MHz
 	wire clk25; // 25MHz clock
@@ -45,12 +48,11 @@ module VGAController(
 	wire[9:0] x;
 	wire[8:0] y;
 	
-	reg[9:0] squareX ;
+	reg[9:0] squareX;
 	reg[8:0] squareY;
-	wire[6:0] ascii_data ;	
 	initial begin
-	   assign squareX = 0;
-	   assign squareY = 0;
+	   assign squareX = 270;
+	   assign squareY = 300;
 	end
 	
 	wire[9:0] xLeftBound = squareX;
@@ -72,12 +74,13 @@ module VGAController(
 	wire[8:0] rightScoreBottomBound = RIGHT_SCORE_Y + SQUARE_DIM;
 	assign showRightScoreHere = (rightScoreLeftBound < x & x < rightScoreRightBound & rightScoreTopBound < y & y < rightScoreBottomBound) & spriteData_right_score;
 	
-	reg [31:0] leftsc, rightsc;
+	reg [7:0] leftsc = 8'b0; 
+	reg [7:0] rightsc = 8'b0;
 	wire [31:0] left_sc, right_sc, l, r;
 	assign left_sc = leftsc;
 	assign right_sc = rightsc;
-	assign lefts = left_sc[7:0];
-	assign rights = right_sc[7:0];
+	assign lefts = moveSpeed[7:0];
+	assign rights = r[7:0];
     
     reg flag;
 
@@ -89,21 +92,20 @@ module VGAController(
 	
 	always @(posedge clk)begin
 		if  (screenEnd) begin
-			if (left) begin
-				squareX = squareX - 1;
-			end else if (right) begin
-				squareX = squareX + 1;
-			end else if (up) begin
-				squareY = squareY - 1;
-			end else if (down) begin
-				squareY = squareY + 1;
-			end
+			if (player & startGame) begin
+				squareX = squareX - moveSpeed/64;
+			end else if (!player & startGame) begin
+				squareX = squareX + moveSpeed/64;
+			end 
+			
 			if (squareX < 160 & !flag) begin
 				rightsc <= rightsc + 1;
+				squareX = 270;
 				flag <= 1'b1;
 			end
 			if (squareX > 430 & !flag) begin
 				leftsc <= leftsc + 1;
+				squareX = 270;
 				flag <= 1'b1;
 			end
 
@@ -151,9 +153,9 @@ module VGAController(
 	//left score sprite
 	wire[17:0] spriteAddress_score_left;  	 // Image address for the image data
 	wire spriteData_score_left; 	 // Color address for the color palette
-	assign spriteAddress_score_left = (left_sc+15)*2500+ x-leftScoreLeftBound + 50*(y-leftScoreTopBound);			
+	assign spriteAddress_score_left = (right_sc+15)*2500+ x-leftScoreLeftBound + 50*(y-leftScoreTopBound);			
 	VGARAM #(		
-		.DEPTH(50*50*94), 				     // Set RAM depth to contain every pixel
+		.DEPTH(50*50*95), 				     // Set RAM depth to contain every pixel
 		.DATA_WIDTH(1),      // Set data width according to the color palette
 		.ADDRESS_WIDTH(18),     // Set address with according to the pixel count
 		.MEMFILE({FILES_PATH, "sprites.mem"})) // Memory initialization
@@ -166,9 +168,9 @@ module VGAController(
 	//right score sprite
 	wire[17:0] spriteAddress_right_score;  	 // Image address for the image data
 	wire spriteData_right_score; 	 // Color address for the color palette
-	assign spriteAddress_right_score = (right_sc-33)*2500+ x-rightScoreLeftBound + 50*(y-rightScoreTopBound);			
+	assign spriteAddress_right_score = (left_sc+15)*2500+ x-rightScoreLeftBound + 50*(y-rightScoreTopBound);			
 	VGARAM #(		
-		.DEPTH(50*50*94), 				     // Set RAM depth to contain every pixel
+		.DEPTH(50*50*95), 				     // Set RAM depth to contain every pixel
 		.DATA_WIDTH(1),      // Set data width according to the color palette
 		.ADDRESS_WIDTH(18),     // Set address with according to the pixel count
 		.MEMFILE({FILES_PATH, "sprites.mem"})) // Memory initialization
@@ -179,12 +181,11 @@ module VGAController(
 		.wEn(1'b0));
 		
 	// ball sprite
-	
 	wire[17:0] spriteAddress;  	 // Image address for the image data
 	wire spriteData; 	 // Color address for the color palette
-	assign spriteAddress = (48-33)*2500+ x-xLeftBound + 50*(y-yTopBound);			
+	assign spriteAddress = (94)*2500+ x-xLeftBound + 50*(y-yTopBound);			
 	VGARAM #(		
-		.DEPTH(50*50*94), 				     // Set RAM depth to contain every pixel
+		.DEPTH(50*50*95), 				     // Set RAM depth to contain every pixel
 		.DATA_WIDTH(1),      // Set data width according to the color palette
 		.ADDRESS_WIDTH(18),     // Set address with according to the pixel count
 		.MEMFILE({FILES_PATH, "sprites.mem"})) // Memory initialization
