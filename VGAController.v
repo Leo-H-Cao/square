@@ -34,9 +34,84 @@ module VGAController(
 	// VGA Timing Generation for a Standard VGA Screen
 	localparam 
 		VIDEO_WIDTH = 640,  // Standard VGA Width
-		VIDEO_HEIGHT = 480; // Standard VGA Height
+		VIDEO_HEIGHT = 480, // Standard VGA Height
+		SQUARE_DIM = 50,
+		LEFT_SCORE_X = 20,
+		LEFT_SCORE_Y = 20,
+		RIGHT_SCORE_X = 590,
+		RIGHT_SCORE_Y = 20;
 
 	wire active, screenEnd;
+	wire[9:0] x;
+	wire[8:0] y;
+	
+	reg[9:0] squareX ;
+	reg[8:0] squareY;
+	wire[6:0] ascii_data ;	
+	initial begin
+	   assign squareX = 0;
+	   assign squareY = 0;
+	end
+	
+	wire[9:0] xLeftBound = squareX;
+	wire[9:0] xRightBound = squareX + SQUARE_DIM;
+	wire[8:0] yTopBound = squareY;
+	wire[8:0] yBottomBound = squareY + SQUARE_DIM;
+	
+	assign showSquareHere = (xLeftBound < x & x < xRightBound & yTopBound < y & y < yBottomBound) & spriteData;
+
+	wire[9:0] leftScoreLeftBound = LEFT_SCORE_X;
+	wire[9:0] leftScoreRightBound = LEFT_SCORE_X + SQUARE_DIM;
+	wire[8:0] leftScoreTopBound = LEFT_SCORE_Y;
+	wire[8:0] leftScoreBottomBound = LEFT_SCORE_Y + SQUARE_DIM;
+	assign showLeftScoreHere = (leftScoreLeftBound < x & x < leftScoreRightBound & leftScoreTopBound < y & y < leftScoreBottomBound) & spriteData_score_left;
+
+	wire[9:0] rightScoreLeftBound = RIGHT_SCORE_X;
+	wire[9:0] rightScoreRightBound = RIGHT_SCORE_X + SQUARE_DIM;
+	wire[8:0] rightScoreTopBound = RIGHT_SCORE_Y;
+	wire[8:0] rightScoreBottomBound = RIGHT_SCORE_Y + SQUARE_DIM;
+	assign showRightScoreHere = (rightScoreLeftBound < x & x < rightScoreRightBound & rightScoreTopBound < y & y < rightScoreBottomBound) & spriteData_right_score;
+	
+	reg [31:0] leftsc, rightsc;
+	wire [31:0] left_sc, right_sc, l, r;
+	assign left_sc = leftsc;
+	assign right_sc = rightsc;
+	assign lefts = left_sc[7:0];
+	assign rights = right_sc[7:0];
+    
+    reg flag;
+
+	wire [31:0] sq_left, sq_right;
+	assign sq_left = squareX;
+	assign sq_right = squareX+SQUARE_DIM;
+
+	Wrapper wr(clk, reset, sq_left, sq_right, l, r);
+	
+	always @(posedge clk)begin
+		if  (screenEnd) begin
+			if (left) begin
+				squareX = squareX - 1;
+			end else if (right) begin
+				squareX = squareX + 1;
+			end else if (up) begin
+				squareY = squareY - 1;
+			end else if (down) begin
+				squareY = squareY + 1;
+			end
+			if (squareX < 160 & !flag) begin
+				rightsc <= rightsc + 1;
+				flag <= 1'b1;
+			end
+			if (squareX > 430 & !flag) begin
+				leftsc <= leftsc + 1;
+				flag <= 1'b1;
+			end
+
+			if (squareX > 160 && squareX < 430 & flag)begin
+				flag <= 1'b0;
+			end
+		end
+	end
 	
 	VGATimingGenerator #(
 		.HEIGHT(VIDEO_HEIGHT), // Use the standard VGA Values
@@ -62,7 +137,6 @@ module VGAController(
 	wire[PIXEL_ADDRESS_WIDTH-1:0] imgAddress;  	 // Image address for the image data
 	wire[PALETTE_ADDRESS_WIDTH-1:0] colorAddr; 	 // Color address for the color palette
 	assign imgAddress = x + 640*y;				 // Address calculated coordinate
-
 	VGARAM #(		
 		.DEPTH(PIXEL_COUNT), 				     // Set RAM depth to contain every pixel
 		.DATA_WIDTH(PALETTE_ADDRESS_WIDTH),      // Set data width according to the color palette
@@ -73,6 +147,52 @@ module VGAController(
 		.addr(imgAddress),					 // Image data address
 		.dataOut(colorAddr),				 // Color palette address
 		.wEn(1'b0)); 						 // We're always reading
+
+	//left score sprite
+	wire[17:0] spriteAddress_score_left;  	 // Image address for the image data
+	wire spriteData_score_left; 	 // Color address for the color palette
+	assign spriteAddress_score_left = (left_sc+15)*2500+ x-leftScoreLeftBound + 50*(y-leftScoreTopBound);			
+	VGARAM #(		
+		.DEPTH(50*50*94), 				     // Set RAM depth to contain every pixel
+		.DATA_WIDTH(1),      // Set data width according to the color palette
+		.ADDRESS_WIDTH(18),     // Set address with according to the pixel count
+		.MEMFILE({FILES_PATH, "sprites.mem"})) // Memory initialization
+	SpriteDataScoreLeft(
+		.clk(clk), 						 // Falling edge of the 100 MHz clk
+		.addr(spriteAddress_score_left),					 // Image data address
+		.dataOut(spriteData_score_left),				 // Color palette address
+		.wEn(1'b0));
+
+	//right score sprite
+	wire[17:0] spriteAddress_right_score;  	 // Image address for the image data
+	wire spriteData_right_score; 	 // Color address for the color palette
+	assign spriteAddress_right_score = (right_sc-33)*2500+ x-rightScoreLeftBound + 50*(y-rightScoreTopBound);			
+	VGARAM #(		
+		.DEPTH(50*50*94), 				     // Set RAM depth to contain every pixel
+		.DATA_WIDTH(1),      // Set data width according to the color palette
+		.ADDRESS_WIDTH(18),     // Set address with according to the pixel count
+		.MEMFILE({FILES_PATH, "sprites.mem"})) // Memory initialization
+	SpriteDataScoreRight(
+		.clk(clk), 						 // Falling edge of the 100 MHz clk
+		.addr(spriteAddress_right_score),					 // Image data address
+		.dataOut(spriteData_right_score),				 // Color palette address
+		.wEn(1'b0));
+		
+	// ball sprite
+	
+	wire[17:0] spriteAddress;  	 // Image address for the image data
+	wire spriteData; 	 // Color address for the color palette
+	assign spriteAddress = (48-33)*2500+ x-xLeftBound + 50*(y-yTopBound);			
+	VGARAM #(		
+		.DEPTH(50*50*94), 				     // Set RAM depth to contain every pixel
+		.DATA_WIDTH(1),      // Set data width according to the color palette
+		.ADDRESS_WIDTH(18),     // Set address with according to the pixel count
+		.MEMFILE({FILES_PATH, "sprites.mem"})) // Memory initialization
+	SpriteData(
+		.clk(clk), 						 // Falling edge of the 100 MHz clk
+		.addr(spriteAddress),					 // Image data address
+		.dataOut(spriteData),				 // Color palette address
+		.wEn(1'b0));
 
 	// Color Palette to Map Color Address to 12-Bit Color
 	wire[BITS_PER_COLOR-1:0] colorData; // 12-bit color data at current pixel
@@ -90,97 +210,9 @@ module VGAController(
 	
 
 	// Assign to output color from register if active
-	wire[BITS_PER_COLOR-1:0] colorOut; 			  // Output color  // When not active, output black
-	assign colorOut = active ? (x > square_left && x < square_right && y > square_top && y < square_bottom ? (outSprite ? 12'b11111111111 : 12'b0) : colorData) : 12'd0;
+	wire[BITS_PER_COLOR-1:0] colorOut; 			  // Output color 
+	assign colorOut = (active & ~showSquareHere & ~showLeftScoreHere & ~showRightScoreHere) ? colorData : 12'd0; // When not active, output black
+
 	// Quickly assign the output colors to their channels using concatenation
 	assign {VGA_R, VGA_G, VGA_B} = colorOut;
-	reg [31:0] leftsc, rightsc;
-	wire [31:0] left_sc, right_sc;
-	wire [31:0] l, r;
-	assign left_sc = leftsc;
-	assign right_sc = rightsc;
-	Wrapper wr(clk, reset, square_left, square_right, l, r);
-	assign lefts = left_sc[7:0];
-	assign rights = right_sc[7:0];
-
-	//reference points
-	wire[9:0] x;
-	wire[8:0] y;
-
-	reg[9:0] square_x;
-	reg[8:0] square_y;
-	reg flag;
-
-	initial begin
-		square_x = 270;
-		square_y = 240;
-		flag = 1'b0;
-	end
-
-	reg [9:0] square_left, square_right;
-	reg [8:0] square_bottom, square_top;
-	
-
-	always @(posedge screenEnd)begin
-		if (left) begin
-			square_x <= square_x-1;
-		end else if (right) begin
-			square_x <= square_x +1;
-		end else if (up) begin
-			square_y <= square_y -1;
-		end else if (down) begin
-			square_y <= square_y+1;
-		end
-		if (square_x < 160 & !flag) begin
-		     rightsc <= rightsc + 1;
-			 flag <= 1'b1;
-		end
-		if (square_x > 430 & !flag) begin
-		     leftsc <= leftsc + 1;
-			 flag <= 1'b1;
-		end
-
-		if (square_x > 160 && square_x < 430 & flag)begin
-			 flag <= 1'b0;
-		end
-		
-
-		square_left <= square_x;
-		square_right <= square_x + 50;
-		square_bottom <= square_y + 50;
-		square_top <= square_y;
-
-
-	end
-	
-	wire [7:0] rx_data;
-	wire read_data;
-	reg [7:0] latch_rx;
-	Ps2Interface my_ps2(ps2_clk, ps2_data, clk, rst, 8'b0, 1'b0, rx_data, read_data, busy, err);
-
-	always @(posedge clk)begin
-		if (read_data) begin
-			latch_rx <= rx_data;
-		end
-	end
-
-	reg [7:0] outAscii;
-	reg outSprite;
-	wire [7:0] outAsciiw;
-	wire outSpritew;
-	
-	VGARAM #(8, 9, 256, {FILES_PATH, "ascii.mem"})ASCIIRAM(clk, 1'b0, latch_rx, 8'b0, outAsciiw);
-
-	always @(posedge clk)begin
-		outAscii <= outAsciiw;
-	end
-
-	assign spriteAddress = (outAscii - 35)*2500 + (x-square_left+50*(y-square_top));
-
-	VGARAM #(1, 19, 256, {FILES_PATH, "sprites.mem"})SPRITERAM(clk, 1'b0, spriteAddress, 8'b0, outSpritew);
-
-	always @(posedge clk)begin
-		outSprite <= outSpritew;
-	end
-	
 endmodule

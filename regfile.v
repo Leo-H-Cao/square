@@ -3,7 +3,7 @@ module regfile (
 	ctrl_writeEnable, ctrl_reset, ctrl_writeReg,
 	ctrl_readRegA, ctrl_readRegB, data_writeReg,
 	data_readRegA, data_readRegB,
-	ball_left_data, ball_right_data, left_sc, right_sc
+	ball_left_data, ball_right_data, left_sc, right_sc,
 );
 
 	input clock, ctrl_writeEnable, ctrl_reset;
@@ -35,6 +35,19 @@ module regfile (
 	genvar i;
 	generate
 		for(i = 1; i < 32 ; i = i + 1) begin: loop1
+
+			if (i==1) begin
+				register score_reg1(data_writeReg, left_sc, clock, select_reg[i], ctrl_reset);
+				tri_state tri_state7(left_sc, select_read1[i], data_readRegA);
+				tri_state tri_state8(left_sc, select_read2[i], data_readRegB);
+			end
+
+			if (i==2) begin
+				register score_reg2(data_writeReg, right_sc, clock, select_reg[i], ctrl_reset);
+				tri_state tri_state9(right_sc, select_read1[i], data_readRegA);
+				tri_state tri_state10(right_sc, select_read2[i], data_readRegB);
+			end
+
 			if (i==3) begin
 				wire [31:0] ball_right_out;
 				register b_reg1(ball_right_data, ball_right_out, clock, 1'b1, ctrl_reset);
@@ -55,19 +68,6 @@ module regfile (
 				register a_reg(data_writeReg, reg_out, clock, select_reg[i], ctrl_reset);
 				tri_state tri_state5(reg_out, select_read1[i], data_readRegA);
 				tri_state tri_state6(reg_out, select_read2[i], data_readRegB);
-			end
-
-
-			if (i==1) begin
-				register score_reg1(data_writeReg, left_sc, clock, select_reg[i], ctrl_reset);
-				tri_state tri_state7(left_sc, select_read1[i], data_readRegA);
-				tri_state tri_state8(left_sc, select_read2[i], data_readRegB);
-			end
-
-			if (i==2) begin
-				register score_reg2(data_writeReg, right_sc, clock, select_reg[i], ctrl_reset);
-				tri_state tri_state9(right_sc, select_read1[i], data_readRegA);
-				tri_state tri_state10(right_sc, select_read2[i], data_readRegB);
 			end
 		end
 
