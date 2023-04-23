@@ -1,7 +1,7 @@
 Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version     : Vivado v.2021.1 (win64) Build 3247384 Thu Jun 10 19:36:33 MDT 2021
-| Date             : Sat Apr 22 15:06:00 2023
+| Date             : Sun Apr 23 15:18:02 2023
 | Host             : P2-01 running 64-bit major release  (build 9200)
 | Command          : report_power -file VGAController_power_routed.rpt -pb VGAController_power_summary_routed.pb -rpx VGAController_power_routed.rpx
 | Design           : VGAController
@@ -30,11 +30,11 @@ Table of Contents
 ----------
 
 +--------------------------+----------------------------------+
-| Total On-Chip Power (W)  | 38.818 (Junction temp exceeded!) |
+| Total On-Chip Power (W)  | 42.723 (Junction temp exceeded!) |
 | Design Power Budget (W)  | Unspecified*                     |
 | Power Budget Margin (W)  | NA                               |
-| Dynamic (W)              | 37.955                           |
-| Device Static (W)        | 0.863                            |
+| Dynamic (W)              | 41.869                           |
+| Device Static (W)        | 0.853                            |
 | Effective TJA (C/W)      | 4.6                              |
 | Max Ambient (C)          | 0.0                              |
 | Junction Temperature (C) | 125.0                            |
@@ -52,19 +52,19 @@ Table of Contents
 +----------------+-----------+----------+-----------+-----------------+
 | On-Chip        | Power (W) | Used     | Available | Utilization (%) |
 +----------------+-----------+----------+-----------+-----------------+
-| Slice Logic    |     8.890 |     5106 |       --- |             --- |
-|   LUT as Logic |     8.598 |     2881 |     63400 |            4.54 |
-|   Register     |     0.232 |     1526 |    126800 |            1.20 |
-|   CARRY4       |     0.051 |       16 |     15850 |            0.10 |
+| Slice Logic    |     8.092 |     5092 |       --- |             --- |
+|   LUT as Logic |     7.819 |     2854 |     63400 |            4.50 |
+|   Register     |     0.215 |     1520 |    126800 |            1.20 |
+|   CARRY4       |     0.048 |       23 |     15850 |            0.15 |
 |   BUFG         |     0.006 |        1 |        32 |            3.13 |
-|   F7/F8 Muxes  |     0.004 |        3 |     63400 |           <0.01 |
+|   F7/F8 Muxes  |     0.005 |        3 |     63400 |           <0.01 |
 |   Others       |     0.000 |      439 |       --- |             --- |
-| Signals        |    12.984 |     4728 |       --- |             --- |
-| Block RAM      |     2.467 |      107 |       135 |           79.26 |
-| DSPs           |     1.926 |        9 |       240 |            3.75 |
-| I/O            |    11.687 |       42 |       210 |           20.00 |
-| Static Power   |     0.863 |          |           |                 |
-| Total          |    38.818 |          |           |                 |
+| Signals        |    10.470 |     4677 |       --- |             --- |
+| Block RAM      |     2.126 |       91 |       135 |           67.41 |
+| DSPs           |     1.579 |        9 |       240 |            3.75 |
+| I/O            |    19.602 |       42 |       210 |           20.00 |
+| Static Power   |     0.853 |          |           |                 |
+| Total          |    42.723 |          |           |                 |
 +----------------+-----------+----------+-----------+-----------------+
 
 
@@ -74,16 +74,16 @@ Table of Contents
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
 | Source    | Voltage (V) | Total (A) | Dynamic (A) | Static (A) | Powerup (A) | Budget (A)  | Margin (A) |
 +-----------+-------------+-----------+-------------+------------+-------------+-------------+------------+
-| Vccint    |       1.000 |    26.690 |      26.094 |      0.595 |       NA    | Unspecified | NA         |
-| Vccaux    |       1.800 |     0.520 |       0.427 |      0.093 |       NA    | Unspecified | NA         |
-| Vcco33    |       3.300 |     3.300 |       3.296 |      0.004 |       NA    | Unspecified | NA         |
+| Vccint    |       1.000 |    22.714 |      22.124 |      0.590 |       NA    | Unspecified | NA         |
+| Vccaux    |       1.800 |     0.810 |       0.717 |      0.093 |       NA    | Unspecified | NA         |
+| Vcco33    |       3.300 |     5.540 |       5.536 |      0.004 |       NA    | Unspecified | NA         |
 | Vcco25    |       2.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco18    |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco15    |       1.500 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco135   |       1.350 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vcco12    |       1.200 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vccaux_io |       1.800 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
-| Vccbram   |       1.000 |     0.269 |       0.217 |      0.051 |       NA    | Unspecified | NA         |
+| Vccbram   |       1.000 |     0.234 |       0.187 |      0.046 |       NA    | Unspecified | NA         |
 | MGTAVcc   |       1.000 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | MGTAVtt   |       1.200 |     0.000 |       0.000 |      0.000 |       NA    | Unspecified | NA         |
 | Vccadc    |       1.800 |     0.020 |       0.000 |      0.020 |       NA    | Unspecified | NA         |
@@ -141,42 +141,42 @@ Table of Contents
 +---------------------------+-----------+
 | Name                      | Power (W) |
 +---------------------------+-----------+
-| VGAController             |    37.955 |
+| VGAController             |    41.869 |
 |   ColorPalette            |     0.129 |
-|   Display                 |     0.582 |
-|   ImageData               |     2.218 |
-|   SpriteData              |     0.752 |
-|   SpriteDataScoreLeft     |     0.376 |
-|   SpriteDataScoreRight    |     0.366 |
-|   wr                      |    16.931 |
-|     CPU                   |    16.584 |
-|       alu_b_bypass        |     0.482 |
-|       dx_latch            |     3.685 |
-|       fd_latch            |     0.039 |
-|       md_logic            |    10.614 |
-|       mw_latch            |     0.579 |
+|   Display                 |     0.542 |
+|   ImageData               |     1.937 |
+|   SpriteData              |     0.293 |
+|   SpriteDataScoreLeft     |     0.185 |
+|   SpriteDataScoreRight    |     0.118 |
+|   wr                      |    15.730 |
+|     CPU                   |    15.475 |
+|       alu_b_bypass        |     0.429 |
+|       dx_latch            |     3.186 |
+|       fd_latch            |     0.040 |
+|       md_logic            |    10.353 |
+|       mw_latch            |     0.443 |
 |       pcReg               |     0.006 |
-|       xm_latch            |     1.180 |
-|     InstMem               |     0.013 |
-|     RegisterFile          |     0.334 |
-|       decoder_read1       |     0.006 |
+|       xm_latch            |     1.018 |
+|     InstMem               |     0.012 |
+|     RegisterFile          |     0.243 |
+|       decoder_read1       |     0.005 |
 |       decoder_read2       |     0.018 |
-|       decoder_write       |     0.091 |
-|       loop1[10].a_reg     |     0.003 |
-|       loop1[12].a_reg     |     0.004 |
-|       loop1[14].a_reg     |     0.007 |
-|       loop1[16].a_reg     |     0.013 |
-|       loop1[18].a_reg     |     0.003 |
-|       loop1[20].a_reg     |     0.020 |
+|       decoder_write       |     0.054 |
+|       loop1[10].a_reg     |     0.001 |
+|       loop1[12].a_reg     |     0.002 |
+|       loop1[14].a_reg     |     0.003 |
+|       loop1[16].a_reg     |     0.010 |
+|       loop1[18].a_reg     |     0.002 |
+|       loop1[20].a_reg     |     0.012 |
 |       loop1[23].a_reg     |     0.002 |
-|       loop1[24].a_reg     |     0.003 |
-|       loop1[26].a_reg     |     0.006 |
+|       loop1[24].a_reg     |     0.002 |
+|       loop1[26].a_reg     |     0.004 |
 |       loop1[29].a_reg     |     0.002 |
-|       loop1[2].score_reg2 |     0.040 |
-|       loop1[30].a_reg     |     0.076 |
-|       loop1[5].a_reg      |     0.004 |
-|       loop1[6].a_reg      |     0.003 |
-|       loop1[8].a_reg      |     0.032 |
+|       loop1[2].score_reg2 |     0.035 |
+|       loop1[30].a_reg     |     0.060 |
+|       loop1[5].a_reg      |     0.005 |
+|       loop1[6].a_reg      |     0.001 |
+|       loop1[8].a_reg      |     0.022 |
 +---------------------------+-----------+
 
 

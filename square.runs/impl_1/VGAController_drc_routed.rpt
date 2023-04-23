@@ -1,7 +1,7 @@
 Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2021.1 (win64) Build 3247384 Thu Jun 10 19:36:33 MDT 2021
-| Date         : Sat Apr 22 15:05:57 2023
+| Date         : Sun Apr 23 15:18:00 2023
 | Host         : P2-01 running 64-bit major release  (build 9200)
 | Command      : report_drc -file VGAController_drc_routed.rpt -pb VGAController_drc_routed.pb -rpx VGAController_drc_routed.rpx
 | Design       : VGAController
@@ -24,13 +24,13 @@ Table of Contents
       Design limits: <entire design considered>
            Ruledeck: default
              Max violations: <unlimited>
-             Violations found: 48
+             Violations found: 49
 +-----------+----------+-----------------------------------------------------+------------+
 | Rule      | Severity | Description                                         | Violations |
 +-----------+----------+-----------------------------------------------------+------------+
 | CFGBVS-1  | Warning  | Missing CFGBVS and CONFIG_VOLTAGE Design Properties | 1          |
 | CHECK-3   | Warning  | Report rule limit reached                           | 1          |
-| DPIP-1    | Warning  | Input pipelining                                    | 6          |
+| DPIP-1    | Warning  | Input pipelining                                    | 7          |
 | DPOP-1    | Warning  | PREG Output pipelining                              | 5          |
 | DPOP-2    | Warning  | MREG Output pipelining                              | 3          |
 | REQP-1839 | Warning  | RAMB36 async control check                          | 20         |
@@ -74,15 +74,20 @@ Related violations: <none>
 
 DPIP-1#4 Warning
 Input pipelining  
-DSP spriteAddress_right_score input spriteAddress_right_score/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP spriteAddress0 input spriteAddress0/A[29:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#5 Warning
 Input pipelining  
-DSP spriteAddress_score_left input spriteAddress_score_left/C[47:0] is not pipelined. Pipelining DSP48 input will improve performance.
+DSP spriteAddress_right_score input spriteAddress_right_score/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
 
 DPIP-1#6 Warning
+Input pipelining  
+DSP spriteAddress_score_left input spriteAddress_score_left/C[47:0] is not pipelined. Pipelining DSP48 input will improve performance.
+Related violations: <none>
+
+DPIP-1#7 Warning
 Input pipelining  
 DSP spriteAddress_score_left__0 input spriteAddress_score_left__0/B[17:0] is not pipelined. Pipelining DSP48 input will improve performance.
 Related violations: <none>
