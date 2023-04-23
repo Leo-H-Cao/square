@@ -93,9 +93,9 @@ module VGAController(
 	always @(posedge clk)begin
 		if  (screenEnd) begin
 			if (player & startGame) begin
-				squareX = squareX - moveSpeed/64;
+				squareX = squareX - moveSpeed/32;
 			end else if (!player & startGame) begin
-				squareX = squareX + moveSpeed/64;
+				squareX = squareX + moveSpeed/32;
 			end 
 			
 			if (squareX < 160 & !flag) begin
@@ -153,9 +153,9 @@ module VGAController(
 	//left score sprite
 	wire[17:0] spriteAddress_score_left;  	 // Image address for the image data
 	wire spriteData_score_left; 	 // Color address for the color palette
-	assign spriteAddress_score_left = (right_sc+15)*2500+ x-leftScoreLeftBound + 50*(y-leftScoreTopBound);			
+	assign spriteAddress_score_left = (right_sc)*2500+ x-leftScoreLeftBound + 50*(y-leftScoreTopBound);			
 	VGARAM #(		
-		.DEPTH(50*50*95), 				     // Set RAM depth to contain every pixel
+		.DEPTH(50*50*37), 				     // Set RAM depth to contain every pixel
 		.DATA_WIDTH(1),      // Set data width according to the color palette
 		.ADDRESS_WIDTH(18),     // Set address with according to the pixel count
 		.MEMFILE({FILES_PATH, "sprites.mem"})) // Memory initialization
@@ -168,9 +168,9 @@ module VGAController(
 	//right score sprite
 	wire[17:0] spriteAddress_right_score;  	 // Image address for the image data
 	wire spriteData_right_score; 	 // Color address for the color palette
-	assign spriteAddress_right_score = (left_sc+15)*2500+ x-rightScoreLeftBound + 50*(y-rightScoreTopBound);			
+	assign spriteAddress_right_score = (left_sc)*2500+ x-rightScoreLeftBound + 50*(y-rightScoreTopBound);			
 	VGARAM #(		
-		.DEPTH(50*50*95), 				     // Set RAM depth to contain every pixel
+		.DEPTH(50*50*37), 				     // Set RAM depth to contain every pixel
 		.DATA_WIDTH(1),      // Set data width according to the color palette
 		.ADDRESS_WIDTH(18),     // Set address with according to the pixel count
 		.MEMFILE({FILES_PATH, "sprites.mem"})) // Memory initialization
@@ -183,9 +183,9 @@ module VGAController(
 	// ball sprite
 	wire[17:0] spriteAddress;  	 // Image address for the image data
 	wire spriteData; 	 // Color address for the color palette
-	assign spriteAddress = (94)*2500+ x-xLeftBound + 50*(y-yTopBound);			
+	assign spriteAddress = (36)*2500+ x-xLeftBound + 50*(y-yTopBound);			
 	VGARAM #(		
-		.DEPTH(50*50*95), 				     // Set RAM depth to contain every pixel
+		.DEPTH(50*50*37), 				     // Set RAM depth to contain every pixel
 		.DATA_WIDTH(1),      // Set data width according to the color palette
 		.ADDRESS_WIDTH(18),     // Set address with according to the pixel count
 		.MEMFILE({FILES_PATH, "sprites.mem"})) // Memory initialization
@@ -208,11 +208,42 @@ module VGAController(
 		.addr(colorAddr),					       // Address from the ImageData RAM
 		.dataOut(colorData),				       // Color at current pixel
 		.wEn(1'b0)); 						       // We're always reading
+
+
+
+	//start screen
+	wire[PALETTE_ADDRESS_WIDTH-1:0] colorAddrStartScreen;
+	VGARAM #(		
+		.DEPTH(PIXEL_COUNT), 				     // Set RAM depth to contain every pixel
+		.DATA_WIDTH(PALETTE_ADDRESS_WIDTH),      // Set data width according to the color palette
+		.ADDRESS_WIDTH(PIXEL_ADDRESS_WIDTH),     // Set address with according to the pixel count
+		.MEMFILE({FILES_PATH, "start_screen.mem"})) // Memory initialization
+	StartScreenData(
+		.clk(clk), 						 // Falling edge of the 100 MHz clk
+		.addr(imgAddress),					 // Image data address
+		.dataOut(colorAddrStartScreen),				 // Color palette address
+		.wEn(1'b0)); 						 // We're always reading
+
+	wire[BITS_PER_COLOR-1:0] colorDataStartScreen; // 12-bit color data at current pixel
+
+	VGARAM #(
+		.DEPTH(PALETTE_COLOR_COUNT), 		       // Set depth to contain every color		
+		.DATA_WIDTH(BITS_PER_COLOR), 		       // Set data width according to the bits per color
+		.ADDRESS_WIDTH(PALETTE_ADDRESS_WIDTH),     // Set address width according to the color count
+		.MEMFILE({FILES_PATH, "start_screen_colors.mem"}))  // Memory initialization
+	ColorPaletteStartScreen(
+		.clk(clk), 							   	   // Rising edge of the 100 MHz clk
+		.addr(colorAddrStartScreen),					       // Address from the ImageData RAM
+		.dataOut(colorDataStartScreen),				       // Color at current pixel
+		.wEn(1'b0)); 						       // We're always reading
+
 	
 
 	// Assign to output color from register if active
 	wire[BITS_PER_COLOR-1:0] colorOut; 			  // Output color 
-	assign colorOut = (active & ~showSquareHere & ~showLeftScoreHere & ~showRightScoreHere) ? colorData : 12'd0; // When not active, output black
+	// assign colorOut = (active & ~startGame) ? colorDataStartScreen : ((active & ~showSquareHere & ~showLeftScoreHere & ~showRightScoreHere) ? colorData : 12'd0); // When not active, output black
+	assign colorOut = (active & ~showSquareHere & ~showLeftScoreHere & ~showRightScoreHere) ? colorData : 12'd0;
+	
 
 	// Quickly assign the output colors to their channels using concatenation
 	assign {VGA_R, VGA_G, VGA_B} = colorOut;

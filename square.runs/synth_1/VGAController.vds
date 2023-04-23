@@ -2,8 +2,8 @@
 # Vivado v2021.1 (64-bit)
 # SW Build 3247384 on Thu Jun 10 19:36:33 MDT 2021
 # IP Build 3246043 on Fri Jun 11 00:30:35 MDT 2021
-# Start of session at: Sat Apr 22 15:03:42 2023
-# Process ID: 9688
+# Start of session at: Sun Apr 23 15:15:41 2023
+# Process ID: 1252
 # Current directory: C:/Users/lhc22/Desktop/square/square.runs/synth_1
 # Command line: vivado.exe -log VGAController.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source VGAController.tcl
 # Log file: C:/Users/lhc22/Desktop/square/square.runs/synth_1/VGAController.vds
@@ -17,7 +17,7 @@ INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7a100
 INFO: [Device 21-403] Loading part xc7a100tcsg324-1
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 13352
+INFO: [Synth 8-7075] Helper process launched with PID 10228
 WARNING: [Synth 8-6901] identifier 'xm_ir_rd' is used before its declaration [C:/Users/lhc22/Desktop/square/bypass.v:11]
 WARNING: [Synth 8-6901] identifier 'mw_ir_rd' is used before its declaration [C:/Users/lhc22/Desktop/square/bypass.v:11]
 WARNING: [Synth 8-6901] identifier 'xm_ir_rd' is used before its declaration [C:/Users/lhc22/Desktop/square/bypass.v:38]
@@ -43,7 +43,7 @@ WARNING: [Synth 8-6901] identifier 'spriteData' is used before its declaration [
 WARNING: [Synth 8-6901] identifier 'spriteData_score_left' is used before its declaration [C:/Users/lhc22/Desktop/square/VGAController.v:69]
 WARNING: [Synth 8-6901] identifier 'spriteData_right_score' is used before its declaration [C:/Users/lhc22/Desktop/square/VGAController.v:75]
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:02 ; elapsed = 00:00:03 . Memory (MB): peak = 1329.367 ; gain = 0.000
+Starting RTL Elaboration : Time (s): cpu = 00:00:03 ; elapsed = 00:00:03 . Memory (MB): peak = 1330.203 ; gain = 0.000
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-6157] synthesizing module 'VGAController' [C:/Users/lhc22/Desktop/square/VGAController.v:2]
 WARNING: [Synth 8-6896] procedural assign is inside initial block, initial block items will be ignored [C:/Users/lhc22/Desktop/square/VGAController.v:54]
@@ -173,7 +173,7 @@ WARNING: [Synth 8-7023] instance 'ImageData' of module 'VGARAM' has 5 connection
 INFO: [Synth 8-6157] synthesizing module 'VGARAM__parameterized0' [C:/Users/lhc22/Desktop/square/VGARAM.v:2]
 	Parameter DATA_WIDTH bound to: 1 - type: integer 
 	Parameter ADDRESS_WIDTH bound to: 18 - type: integer 
-	Parameter DEPTH bound to: 237500 - type: integer 
+	Parameter DEPTH bound to: 92500 - type: integer 
 	Parameter MEMFILE bound to: 328'b0100001100111010001011110101010101110011011001010111001001110011001011110110110001101000011000110011001000110010001011110100010001100101011100110110101101110100011011110111000000101111011100110111000101110101011000010111001001100101001011110111001101110000011100100110100101110100011001010111001100101110011011010110010101101101 
 INFO: [Synth 8-3876] $readmem data file 'C:/Users/lhc22/Desktop/square/sprites.mem' is read successfully [C:/Users/lhc22/Desktop/square/VGARAM.v:13]
 INFO: [Synth 8-6155] done synthesizing module 'VGARAM__parameterized0' (55#1) [C:/Users/lhc22/Desktop/square/VGARAM.v:2]
@@ -192,20 +192,38 @@ INFO: [Synth 8-3876] $readmem data file 'C:/Users/lhc22/Desktop/square/colors.me
 INFO: [Synth 8-6155] done synthesizing module 'VGARAM__parameterized1' (55#1) [C:/Users/lhc22/Desktop/square/VGARAM.v:2]
 WARNING: [Synth 8-7071] port 'dataIn' of module 'VGARAM' is unconnected for instance 'ColorPalette' [C:/Users/lhc22/Desktop/square/VGAController.v:206]
 WARNING: [Synth 8-7023] instance 'ColorPalette' of module 'VGARAM' has 5 connections declared, but only 4 given [C:/Users/lhc22/Desktop/square/VGAController.v:206]
+INFO: [Synth 8-6157] synthesizing module 'VGARAM__parameterized2' [C:/Users/lhc22/Desktop/square/VGARAM.v:2]
+	Parameter DATA_WIDTH bound to: 9 - type: integer 
+	Parameter ADDRESS_WIDTH bound to: 20 - type: integer 
+	Parameter DEPTH bound to: 307200 - type: integer 
+	Parameter MEMFILE bound to: 368'b01000011001110100010111101010101011100110110010101110010011100110010111101101100011010000110001100110010001100100010111101000100011001010111001101101011011101000110111101110000001011110111001101110001011101010110000101110010011001010010111101110011011101000110000101110010011101000101111101110011011000110111001001100101011001010110111000101110011011010110010101101101 
+INFO: [Synth 8-3876] $readmem data file 'C:/Users/lhc22/Desktop/square/start_screen.mem' is read successfully [C:/Users/lhc22/Desktop/square/VGARAM.v:13]
+INFO: [Synth 8-6155] done synthesizing module 'VGARAM__parameterized2' (55#1) [C:/Users/lhc22/Desktop/square/VGARAM.v:2]
+WARNING: [Synth 8-7071] port 'dataIn' of module 'VGARAM' is unconnected for instance 'StartScreenData' [C:/Users/lhc22/Desktop/square/VGAController.v:221]
+WARNING: [Synth 8-7023] instance 'StartScreenData' of module 'VGARAM' has 5 connections declared, but only 4 given [C:/Users/lhc22/Desktop/square/VGAController.v:221]
+INFO: [Synth 8-6157] synthesizing module 'VGARAM__parameterized3' [C:/Users/lhc22/Desktop/square/VGARAM.v:2]
+	Parameter DATA_WIDTH bound to: 12 - type: integer 
+	Parameter ADDRESS_WIDTH bound to: 9 - type: integer 
+	Parameter DEPTH bound to: 256 - type: integer 
+	Parameter MEMFILE bound to: 424'b0100001100111010001011110101010101110011011001010111001001110011001011110110110001101000011000110011001000110010001011110100010001100101011100110110101101110100011011110111000000101111011100110111000101110101011000010111001001100101001011110111001101110100011000010111001001110100010111110111001101100011011100100110010101100101011011100101111101100011011011110110110001101111011100100111001100101110011011010110010101101101 
+INFO: [Synth 8-3876] $readmem data file 'C:/Users/lhc22/Desktop/square/start_screen_colors.mem' is read successfully [C:/Users/lhc22/Desktop/square/VGARAM.v:13]
+INFO: [Synth 8-6155] done synthesizing module 'VGARAM__parameterized3' (55#1) [C:/Users/lhc22/Desktop/square/VGARAM.v:2]
+WARNING: [Synth 8-7071] port 'dataIn' of module 'VGARAM' is unconnected for instance 'ColorPaletteStartScreen' [C:/Users/lhc22/Desktop/square/VGAController.v:234]
+WARNING: [Synth 8-7023] instance 'ColorPaletteStartScreen' of module 'VGARAM' has 5 connections declared, but only 4 given [C:/Users/lhc22/Desktop/square/VGAController.v:234]
 INFO: [Synth 8-6155] done synthesizing module 'VGAController' (56#1) [C:/Users/lhc22/Desktop/square/VGAController.v:2]
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 1524.797 ; gain = 195.430
+Finished RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1589.902 ; gain = 259.699
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1524.797 ; gain = 195.430
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1589.902 ; gain = 259.699
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 1524.797 ; gain = 195.430
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 1589.902 ; gain = 259.699
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.141 . Memory (MB): peak = 1524.797 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.142 . Memory (MB): peak = 1589.902 ; gain = 0.000
 INFO: [Project 1-570] Preparing netlist for logic optimization
 
 Processing XDC Constraints
@@ -221,39 +239,41 @@ INFO: [Project 1-236] Implementation specific constraints were found while readi
 Resolution: To avoid this warning, move constraints listed in [.Xil/VGAController_propImpl.xdc] to another XDC file and exclude this new file from synthesis with the used_in_synthesis property (File Properties dialog in GUI) and re-run elaboration/synthesis.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.007 . Memory (MB): peak = 1529.457 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.007 . Memory (MB): peak = 1589.902 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.020 . Memory (MB): peak = 1529.457 ; gain = 0.000
+Constraint Validation Runtime : Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.021 . Memory (MB): peak = 1589.902 ; gain = 0.000
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1529.457 ; gain = 200.090
+Finished Constraint Validation : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 1589.902 ; gain = 259.699
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7a100tcsg324-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1529.457 ; gain = 200.090
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 1589.902 ; gain = 259.699
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:12 ; elapsed = 00:00:13 . Memory (MB): peak = 1529.457 ; gain = 200.090
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:14 ; elapsed = 00:00:15 . Memory (MB): peak = 1589.902 ; gain = 259.699
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:14 ; elapsed = 00:00:16 . Memory (MB): peak = 1529.457 ; gain = 200.090
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:17 ; elapsed = 00:00:19 . Memory (MB): peak = 1589.902 ; gain = 259.699
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
 ---------------------------------------------------------------------------------
 Detailed RTL Component Info : 
 +---Adders : 
+	   3 Input   18 Bit       Adders := 1     
 	   3 Input   11 Bit       Adders := 1     
 	   2 Input   11 Bit       Adders := 1     
 	   2 Input   10 Bit       Adders := 4     
-	   3 Input   10 Bit       Adders := 1     
+	   3 Input   10 Bit       Adders := 2     
+	   2 Input    9 Bit       Adders := 1     
 	   2 Input    8 Bit       Adders := 4     
 	   2 Input    2 Bit       Adders := 1     
 +---XORs : 
@@ -263,17 +283,17 @@ Detailed RTL Component Info :
 +---Registers : 
 	               32 Bit    Registers := 1     
 	               19 Bit    Registers := 1     
-	               12 Bit    Registers := 1     
+	               12 Bit    Registers := 2     
 	               10 Bit    Registers := 4     
-	                9 Bit    Registers := 1     
+	                9 Bit    Registers := 2     
 	                8 Bit    Registers := 2     
 	                2 Bit    Registers := 1     
 	                1 Bit    Registers := 1686  
 +---RAMs : 
-	            2700K Bit	(307200 X 9 bit)          RAMs := 1     
-	             231K Bit	(237500 X 1 bit)          RAMs := 3     
+	            2700K Bit	(307200 X 9 bit)          RAMs := 2     
 	             128K Bit	(4096 X 32 bit)          RAMs := 1     
-	               3K Bit	(256 X 12 bit)          RAMs := 1     
+	              90K Bit	(92500 X 1 bit)          RAMs := 3     
+	               3K Bit	(256 X 12 bit)          RAMs := 2     
 +---ROMs : 
 	                    ROMs := 1     
 +---Muxes : 
@@ -300,25 +320,22 @@ Finished Part Resource Summary
 ---------------------------------------------------------------------------------
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
-DSP Report: Generating DSP spriteAddress0, operation Mode is: (D+(A:0x3fffff10))*(B:0x32).
+DSP Report: Generating DSP spriteAddress0, operation Mode is: A*(B:0x32).
 DSP Report: operator spriteAddress0 is absorbed into DSP spriteAddress0.
-DSP Report: operator spriteAddress1 is absorbed into DSP spriteAddress0.
-DSP Report: Generating DSP spriteAddress, operation Mode is: PCIN+(A:0x0):B+(C:0x395f8).
+DSP Report: Generating DSP spriteAddress, operation Mode is: PCIN+(A:0x0):B+(C:0x15f90).
 DSP Report: operator spriteAddress is absorbed into DSP spriteAddress.
 DSP Report: Generating DSP spriteAddress_score_left0, operation Mode is: (D+(A:0x3fffffec))*(B:0x32).
 DSP Report: operator spriteAddress_score_left0 is absorbed into DSP spriteAddress_score_left0.
 DSP Report: operator spriteAddress_score_left1 is absorbed into DSP spriteAddress_score_left0.
-DSP Report: Generating DSP spriteAddress_score_left, operation Mode is: C+(D'+(A:0xf))*(B:0x9c4).
+DSP Report: Generating DSP spriteAddress_score_left, operation Mode is: C+(A:0x9c4)*B2.
 DSP Report: register rightsc_reg is absorbed into DSP spriteAddress_score_left.
 DSP Report: operator spriteAddress_score_left is absorbed into DSP spriteAddress_score_left.
 DSP Report: operator spriteAddress_score_left2 is absorbed into DSP spriteAddress_score_left.
-DSP Report: operator spriteAddress_score_left3 is absorbed into DSP spriteAddress_score_left.
 DSP Report: Generating DSP spriteAddress_score_left, operation Mode is: PCIN+(A:0x0):B+(C:0xffffffffffec).
 DSP Report: operator spriteAddress_score_left is absorbed into DSP spriteAddress_score_left.
-DSP Report: Generating DSP spriteAddress_right_score2, operation Mode is: (D'+(A:0xf))*(B:0x9c4).
+DSP Report: Generating DSP spriteAddress_right_score2, operation Mode is: (A:0x9c4)*B2.
 DSP Report: register leftsc_reg is absorbed into DSP spriteAddress_right_score2.
 DSP Report: operator spriteAddress_right_score2 is absorbed into DSP spriteAddress_right_score2.
-DSP Report: operator spriteAddress_right_score3 is absorbed into DSP spriteAddress_right_score2.
 DSP Report: Generating DSP spriteAddress_right_score, operation Mode is: PCIN+(A:0x0):B+(C:0xfffffffffdb2).
 DSP Report: operator spriteAddress_right_score is absorbed into DSP spriteAddress_right_score.
 DSP Report: Generating DSP spriteAddress_right_score, operation Mode is: PCIN+(D+(A:0x3fffffec))*(B:0x32).
@@ -329,7 +346,7 @@ DSP Report: Generating DSP imgAddress, operation Mode is: C+(A:0x280)*B.
 DSP Report: operator imgAddress is absorbed into DSP imgAddress.
 DSP Report: operator imgAddress0 is absorbed into DSP imgAddress.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:30 ; elapsed = 00:00:32 . Memory (MB): peak = 1839.984 ; gain = 510.617
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:33 ; elapsed = 00:00:35 . Memory (MB): peak = 1767.188 ; gain = 436.984
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP, Shift Register and Retiming Reporting
@@ -348,9 +365,9 @@ Block RAM: Preliminary Mapping Report (see note below)
 |Module Name             | RTL Object      | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
 +------------------------+-----------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
 |VGARAM:                 | MemoryArray_reg | 300 K x 9(NO_CHANGE)   | W | R |                        |   |   | Port A           | 0      | 90     | 
-|VGARAM__parameterized0: | MemoryArray_reg | 231 K x 1(NO_CHANGE)   | W | R |                        |   |   | Port A           | 0      | 8      | 
-|VGARAM__parameterized0: | MemoryArray_reg | 231 K x 1(NO_CHANGE)   | W | R |                        |   |   | Port A           | 0      | 8      | 
-|VGARAM__parameterized0: | MemoryArray_reg | 231 K x 1(NO_CHANGE)   | W | R |                        |   |   | Port A           | 0      | 8      | 
+|VGARAM__parameterized0: | MemoryArray_reg | 90 K x 1(NO_CHANGE)    | W | R |                        |   |   | Port A           | 0      | 3      | 
+|VGARAM__parameterized0: | MemoryArray_reg | 90 K x 1(NO_CHANGE)    | W | R |                        |   |   | Port A           | 0      | 3      | 
+|VGARAM__parameterized0: | MemoryArray_reg | 90 K x 1(NO_CHANGE)    | W | R |                        |   |   | Port A           | 0      | 3      | 
 |VGARAM__parameterized1: | MemoryArray_reg | 256 x 12(NO_CHANGE)    | W | R |                        |   |   | Port A           | 1      | 0      | 
 +------------------------+-----------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
 
@@ -360,14 +377,14 @@ DSP: Preliminary Mapping Report (see note below)
 +--------------+-----------------------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
 |Module Name   | DSP Mapping                       | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
 +--------------+-----------------------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
-|VGAController | (D+(A:0x3fffff10))*(B:0x32)       | 18     | 6      | -      | 9      | 24     | 0    | 0    | -    | 0    | 0     | 0    | 0    | 
-|VGAController | PCIN+(A:0x0):B+(C:0x395f8)        | 30     | 10     | 18     | -      | -1     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
-|VGAController | (D+(A:0x3fffffec))*(B:0x32)       | 18     | 6      | -      | 9      | 24     | 0    | 0    | -    | 0    | 0     | 0    | 0    | 
-|VGAController | C+(D'+(A:0xf))*(B:0x9c4)          | 4      | 12     | 18     | 8      | 18     | 0    | 0    | 0    | 1    | 0     | 0    | 0    | 
+|VGAController | A*(B:0x32)                        | 17     | 6      | -      | -      | 23     | 0    | 0    | -    | -    | -     | 0    | 0    | 
+|VGAController | PCIN+(A:0x0):B+(C:0x15f90)        | 30     | 10     | 17     | -      | -1     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
+|VGAController | (D+(A:0x3fffffec))*(B:0x32)       | 17     | 6      | -      | 9      | 23     | 0    | 0    | -    | 0    | 0     | 0    | 0    | 
+|VGAController | C+(A:0x9c4)*B2                    | 8      | 12     | 17     | -      | 17     | 1    | 0    | 0    | -    | -     | 0    | 0    | 
 |VGAController | PCIN+(A:0x0):B+(C:0xffffffffffec) | 30     | 10     | 6      | -      | -1     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
-|VGAController | (D'+(A:0xf))*(B:0x9c4)            | 4      | 12     | -      | 8      | 21     | 0    | 0    | -    | 1    | 0     | 0    | 0    | 
+|VGAController | (A:0x9c4)*B2                      | 8      | 12     | -      | -      | 20     | 1    | 0    | -    | -    | -     | 0    | 0    | 
 |VGAController | PCIN+(A:0x0):B+(C:0xfffffffffdb2) | 30     | 10     | 11     | -      | -1     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
-|VGAController | PCIN+(D+(A:0x3fffffec))*(B:0x32)  | 18     | 6      | -      | 9      | 18     | 0    | 0    | -    | 0    | 0     | 0    | 0    | 
+|VGAController | PCIN+(D+(A:0x3fffffec))*(B:0x32)  | 17     | 6      | -      | 9      | 17     | 0    | 0    | -    | 0    | 0     | 0    | 0    | 
 |VGAController | C+(A:0x280)*B                     | 9      | 10     | 10     | -      | 19     | 0    | 0    | 0    | -    | -     | 0    | 0    | 
 +--------------+-----------------------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
 
@@ -379,13 +396,13 @@ Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
 Start Applying XDC Timing Constraints
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:38 ; elapsed = 00:00:39 . Memory (MB): peak = 1839.984 ; gain = 510.617
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:00:42 ; elapsed = 00:00:44 . Memory (MB): peak = 1767.188 ; gain = 436.984
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:38 ; elapsed = 00:00:40 . Memory (MB): peak = 1839.984 ; gain = 510.617
+Finished Timing Optimization : Time (s): cpu = 00:00:43 ; elapsed = 00:00:45 . Memory (MB): peak = 1767.188 ; gain = 436.984
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP, Shift Register and Retiming Reporting
@@ -396,9 +413,9 @@ Block RAM: Final Mapping Report
 |Module Name             | RTL Object      | PORT A (Depth x Width) | W | R | PORT B (Depth x Width) | W | R | Ports driving FF | RAMB18 | RAMB36 | 
 +------------------------+-----------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
 |VGARAM:                 | MemoryArray_reg | 300 K x 9(NO_CHANGE)   | W | R |                        |   |   | Port A           | 0      | 90     | 
-|VGARAM__parameterized0: | MemoryArray_reg | 231 K x 1(NO_CHANGE)   | W | R |                        |   |   | Port A           | 0      | 8      | 
-|VGARAM__parameterized0: | MemoryArray_reg | 231 K x 1(NO_CHANGE)   | W | R |                        |   |   | Port A           | 0      | 8      | 
-|VGARAM__parameterized0: | MemoryArray_reg | 231 K x 1(NO_CHANGE)   | W | R |                        |   |   | Port A           | 0      | 8      | 
+|VGARAM__parameterized0: | MemoryArray_reg | 90 K x 1(NO_CHANGE)    | W | R |                        |   |   | Port A           | 0      | 3      | 
+|VGARAM__parameterized0: | MemoryArray_reg | 90 K x 1(NO_CHANGE)    | W | R |                        |   |   | Port A           | 0      | 3      | 
+|VGARAM__parameterized0: | MemoryArray_reg | 90 K x 1(NO_CHANGE)    | W | R |                        |   |   | Port A           | 0      | 3      | 
 |VGARAM__parameterized1: | MemoryArray_reg | 256 x 12(NO_CHANGE)    | W | R |                        |   |   | Port A           | 1      | 0      | 
 +------------------------+-----------------+------------------------+---+---+------------------------+---+---+------------------+--------+--------+
 
@@ -449,23 +466,17 @@ INFO: [Synth 8-7052] The timing for the instance ImageData/MemoryArray_reg_9_5 (
 INFO: [Synth 8-7052] The timing for the instance ImageData/MemoryArray_reg_9_6 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
 INFO: [Synth 8-7052] The timing for the instance ImageData/MemoryArray_reg_9_7 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
 INFO: [Synth 8-7052] The timing for the instance SpriteDataScoreLeft/MemoryArray_reg_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
-INFO: [Synth 8-7052] The timing for the instance SpriteDataScoreLeft/MemoryArray_reg_3 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
-INFO: [Synth 8-7052] The timing for the instance SpriteDataScoreLeft/MemoryArray_reg_5 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
-INFO: [Synth 8-7052] The timing for the instance SpriteDataScoreLeft/MemoryArray_reg_7 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance SpriteDataScoreLeft/MemoryArray_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance SpriteDataScoreLeft/MemoryArray_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
 INFO: [Synth 8-7052] The timing for the instance SpriteDataScoreRight/MemoryArray_reg_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
-INFO: [Synth 8-7052] The timing for the instance SpriteDataScoreRight/MemoryArray_reg_3 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
-INFO: [Synth 8-7052] The timing for the instance SpriteDataScoreRight/MemoryArray_reg_5 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
-INFO: [Synth 8-7052] The timing for the instance SpriteDataScoreRight/MemoryArray_reg_7 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
 INFO: [Synth 8-7052] The timing for the instance SpriteData/MemoryArray_reg_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
-INFO: [Synth 8-7052] The timing for the instance SpriteData/MemoryArray_reg_3 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
-INFO: [Synth 8-7052] The timing for the instance SpriteData/MemoryArray_reg_5 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
-INFO: [Synth 8-7052] The timing for the instance SpriteData/MemoryArray_reg_7 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance SpriteData/MemoryArray_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
 INFO: [Synth 8-7052] The timing for the instance ColorPalette/MemoryArray_reg (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
 INFO: [Synth 8-7052] The timing for the instance wr/InstMem/dataOut_reg_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
 INFO: [Synth 8-7052] The timing for the instance wr/InstMem/dataOut_reg_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
 INFO: [Synth 8-7052] The timing for the instance wr/InstMem/dataOut_reg_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:41 ; elapsed = 00:00:43 . Memory (MB): peak = 1839.984 ; gain = 510.617
+Finished Technology Mapping : Time (s): cpu = 00:00:45 ; elapsed = 00:00:47 . Memory (MB): peak = 1767.188 ; gain = 436.984
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -483,37 +494,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:45 ; elapsed = 00:00:46 . Memory (MB): peak = 1839.984 ; gain = 510.617
+Finished IO Insertion : Time (s): cpu = 00:00:49 ; elapsed = 00:00:51 . Memory (MB): peak = 1767.188 ; gain = 436.984
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:45 ; elapsed = 00:00:46 . Memory (MB): peak = 1839.984 ; gain = 510.617
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:49 ; elapsed = 00:00:51 . Memory (MB): peak = 1767.188 ; gain = 436.984
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:45 ; elapsed = 00:00:47 . Memory (MB): peak = 1839.984 ; gain = 510.617
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:50 ; elapsed = 00:00:52 . Memory (MB): peak = 1767.188 ; gain = 436.984
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:45 ; elapsed = 00:00:47 . Memory (MB): peak = 1839.984 ; gain = 510.617
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:50 ; elapsed = 00:00:52 . Memory (MB): peak = 1767.188 ; gain = 436.984
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:45 ; elapsed = 00:00:47 . Memory (MB): peak = 1839.984 ; gain = 510.617
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:50 ; elapsed = 00:00:52 . Memory (MB): peak = 1767.188 ; gain = 436.984
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:45 ; elapsed = 00:00:47 . Memory (MB): peak = 1839.984 ; gain = 510.617
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:50 ; elapsed = 00:00:52 . Memory (MB): peak = 1767.188 ; gain = 436.984
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -530,45 +541,45 @@ Report Cell Usage:
 |      |Cell     |Count |
 +------+---------+------+
 |1     |BUFG     |     1|
-|2     |CARRY4   |    16|
+|2     |CARRY4   |    23|
 |3     |DSP48E1  |     9|
-|8     |LUT1     |    21|
-|9     |LUT2     |   402|
-|10    |LUT3     |   185|
-|11    |LUT4     |   350|
-|12    |LUT5     |   587|
-|13    |LUT6     |  1676|
-|14    |MUXF7    |     3|
-|15    |RAMB18E1 |     2|
-|17    |RAMB36E1 |   106|
-|44    |FDCE     |  1387|
-|45    |FDRE     |    93|
-|46    |FDSE     |    24|
-|47    |IBUF     |    12|
-|48    |OBUF     |    30|
+|9     |LUT1     |    20|
+|10    |LUT2     |   393|
+|11    |LUT3     |   184|
+|12    |LUT4     |   360|
+|13    |LUT5     |   608|
+|14    |LUT6     |  1650|
+|15    |MUXF7    |     3|
+|16    |RAMB18E1 |     2|
+|18    |RAMB36E1 |    90|
+|40    |FDCE     |  1387|
+|41    |FDRE     |    89|
+|42    |FDSE     |    28|
+|43    |IBUF     |    12|
+|44    |OBUF     |    30|
 +------+---------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:45 ; elapsed = 00:00:47 . Memory (MB): peak = 1839.984 ; gain = 510.617
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:50 ; elapsed = 00:00:52 . Memory (MB): peak = 1767.188 ; gain = 436.984
 ---------------------------------------------------------------------------------
 Synthesis finished with 0 errors, 0 critical warnings and 0 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:37 ; elapsed = 00:00:45 . Memory (MB): peak = 1839.984 ; gain = 505.957
-Synthesis Optimization Complete : Time (s): cpu = 00:00:46 ; elapsed = 00:00:47 . Memory (MB): peak = 1839.984 ; gain = 510.617
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:39 ; elapsed = 00:00:49 . Memory (MB): peak = 1767.188 ; gain = 436.984
+Synthesis Optimization Complete : Time (s): cpu = 00:00:50 ; elapsed = 00:00:52 . Memory (MB): peak = 1767.188 ; gain = 436.984
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.110 . Memory (MB): peak = 1839.984 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 136 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.111 . Memory (MB): peak = 1767.188 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 127 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1839.984 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.004 . Memory (MB): peak = 1767.188 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Synth Design complete, checksum: 344539ce
+Synth Design complete, checksum: 38d56f76
 INFO: [Common 17-83] Releasing license: Synthesis
-191 Infos, 37 Warnings, 5 Critical Warnings and 0 Errors encountered.
+191 Infos, 41 Warnings, 5 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:51 ; elapsed = 00:00:52 . Memory (MB): peak = 1839.984 ; gain = 510.617
+synth_design: Time (s): cpu = 00:00:55 ; elapsed = 00:00:57 . Memory (MB): peak = 1767.188 ; gain = 436.984
 INFO: [runtcl-6] Synthesis results are not added to the cache due to CRITICAL_WARNING
 INFO: [Common 17-1381] The checkpoint 'C:/Users/lhc22/Desktop/square/square.runs/synth_1/VGAController.dcp' has been generated.
 INFO: [runtcl-4] Executing : report_utilization -file VGAController_utilization_synth.rpt -pb VGAController_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Sat Apr 22 15:04:40 2023...
+INFO: [Common 17-206] Exiting Vivado at Sun Apr 23 15:16:44 2023...

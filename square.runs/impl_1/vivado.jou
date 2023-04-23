@@ -2,8 +2,8 @@
 # Vivado v2021.1 (64-bit)
 # SW Build 3247384 on Thu Jun 10 19:36:33 MDT 2021
 # IP Build 3246043 on Fri Jun 11 00:30:35 MDT 2021
-# Start of session at: Sat Apr 22 15:06:18 2023
-# Process ID: 7540
+# Start of session at: Sun Apr 23 15:18:20 2023
+# Process ID: 10644
 # Current directory: C:/Users/lhc22/Desktop/square/square.runs/impl_1
 # Command line: vivado.exe -log VGAController.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source VGAController.tcl -notrace
 # Log file: C:/Users/lhc22/Desktop/square/square.runs/impl_1/VGAController.vdi

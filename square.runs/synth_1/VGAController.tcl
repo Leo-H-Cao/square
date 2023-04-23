@@ -92,6 +92,8 @@ read_mem {
   C:/Users/lhc22/Desktop/square/colors.mem
   C:/Users/lhc22/Desktop/square/image.mem
   {C:/Users/lhc22/Desktop/square/Test Files/Memory Files/square.mem}
+  C:/Users/lhc22/Desktop/square/start_screen.mem
+  C:/Users/lhc22/Desktop/square/start_screen_colors.mem
 }
 read_verilog -library xil_defaultlib {
   C:/Users/lhc22/Desktop/square/RAM.v
