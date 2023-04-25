@@ -28,6 +28,7 @@ set_property PACKAGE_PIN D14 [get_ports {moveSpeed[7]}]
 set_property PACKAGE_PIN H14 [get_ports {player}]
 set_property PACKAGE_PIN G16 [get_ports {adc_start}]
 set_property PACKAGE_PIN F16 [get_ports {eoc}]
+set_property PACKAGE_PIN V10 [get_ports {resetGame}]
 
 set_property PACKAGE_PIN J15 [get_ports {startGame}]
 
@@ -60,6 +61,7 @@ set_property IOSTANDARD LVCMOS33 [get_ports {moveSpeed[7]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {player}]
 set_property IOSTANDARD LVCMOS33 [get_ports {adc_start}]
 set_property IOSTANDARD LVCMOS33 [get_ports {eoc}]
+set_property IOSTANDARD LVCMOS33 [get_ports {resetGame}]
 
 set_property IOSTANDARD LVCMOS33 [get_ports {startGame}]
 

@@ -16,7 +16,8 @@ module VGAController(
 	output player,
 	input startGame,
 	input eoc,
-	output adc_start
+	output adc_start,
+	input resetGame
 	);
 	
 	assign left = sw[3];
@@ -112,6 +113,10 @@ module VGAController(
 
 
 	always @(posedge clk)begin
+		if (resetGame) begin
+			rightsc <= 0;
+			leftsc <= 0;
+		end
 		if  (screenEnd) begin
 			if (player & startGame & leftsc != 8'd5 & rightsc != 8'd5) begin
 				squareX = squareX - moveSpeed/32;
