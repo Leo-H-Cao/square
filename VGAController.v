@@ -52,9 +52,15 @@ module VGAController(
 	
 	reg[9:0] squareX;
 	reg[8:0] squareY;
+	reg playerr;
+	reg[3:0] pulse_start;
+	reg start;
 	initial begin
 		squareX = 270;
 		squareY = 215;
+		playerr = 0;
+		pulse_start = 12;
+		start = 0;
 	end
 	
 	wire[9:0] xLeftBound = squareX;
@@ -92,18 +98,32 @@ module VGAController(
 
 	wire [31:0] proc_player, proc_start, proc_eoc;
 
-	Wrapper wr(clk, reset, proc_player, proc_start, proc_eoc);
-	assign player = proc_player[0];
-	assign adc_start = proc_start[0];
-	assign proc_eoc = eoc;
+	// Wrapper wr(clk, reset, proc_player, proc_start, proc_eoc);
+	// assign player = proc_player[0];
+	// assign adc_start = proc_start[0];
+	// assign proc_eoc = eoc;
+
+	assign player = playerr;
+	assign adc_start = start;
 
 
 	always @(posedge clk)begin
+		if (pulse_start <= 11)begin
+			pulse_start = pulse_start + 1;
+			start = 1;
+		end else if (pulse_start > 11)begin
+			start = 0;
+		end
+
 		if  (screenEnd) begin
-			if (player & startGame) begin
+			if (playerr == 1 && startGame && eoc) begin
 				squareX = squareX - moveSpeed/32;
-			end else if (!player & startGame) begin
+				playerr = 0;
+				pulse_start = 1;
+			end else if (playerr == 0 && startGame && eoc) begin
 				squareX = squareX + moveSpeed/32;
+				playerr = 1;
+				pulse_start = 1;
 			end 
 
 			// if (left) begin
