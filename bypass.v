@@ -21,10 +21,10 @@ module bypass(data, xm_out_ir, mw_out_ir, dx_out_ir, x_alu_a_select, x_alu_b_sel
 
     // booleans for different types of instructions
     wire xm_branch, xm_sw, xm_setx, mw_branch, mw_sw, mw_setx;
-    assign xm_branch = (xm_opcode == 5'b00010 || xm_opcode == 5'b00110);
+    assign xm_branch = (xm_opcode == 5'b00010 || xm_opcode == 5'b00110 || xm_opcode == 5'b11010);
     assign xm_sw = xm_opcode == 5'b00111;
     assign xm_setx = xm_opcode == 5'b10101;
-    assign mw_branch = (mw_opcode == 5'b00010 || mw_opcode == 5'b00110);
+    assign mw_branch = (mw_opcode == 5'b00010 || mw_opcode == 5'b00110 || mw_opcode ==5'b11010);
     assign mw_sw = mw_opcode == 5'b00111;
     assign mw_setx = mw_opcode == 5'b10101;
 
@@ -34,7 +34,7 @@ module bypass(data, xm_out_ir, mw_out_ir, dx_out_ir, x_alu_a_select, x_alu_b_sel
     // r type instructions read from rt, bex reads from reg 30
     assign dx_ir_rs2 = dx_r_type ? dx_out_ir[16:12] : (dx_bex ? 5'b11110 : dx_out_ir[26:22]);
 
-    //also write to reg 30 when overflow?
+    // also write to reg 30 when overflow
     assign xm_rd = (xm_setx || xm_out_over) ? 5'b11110 : xm_ir_rd;
     assign mw_rd = (mw_setx || mw_out_over) ? 5'b11110 : mw_ir_rd;
 

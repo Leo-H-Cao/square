@@ -33,29 +33,33 @@ module regfile (
 
 	tri_state tri_state02(reg0_out, select_read2[0], data_readRegB);
 
+	wire [31:0] player_reg_out;
+	wire [31:0] eoc_reg_out;
+	wire [31:0] start_reg_out;
+	ila_0 debug(.clk(clock), .probe0(player_reg_out), .probe1(data_writeReg), .probe2(select_reg), .probe3(start_reg_out), .probe4(eoc_reg_out), .probe5(eoc), .probe6(ctrl_writeEnable), .probe7(clock));
+
 	genvar i;
 	generate
 		for(i = 1; i < 32 ; i = i + 1) begin: loop1
 
 			if (i==5) begin 
-				register player_reg(data_writeReg, player, clock, select_reg[i], ctrl_reset);
-				tri_state tri_state_player1(player, select_read1[i], data_readRegA);
-				tri_state tri_state_player2(player, select_read2[i], data_readRegB);
+				register player_reg(data_writeReg, player_reg_out, clock, select_reg[i], ctrl_reset);
+				tri_state tri_state_player1(player_reg_out, select_read1[i], data_readRegA);
+				tri_state tri_state_player2(player_reg_out, select_read2[i], data_readRegB);
+				assign player = player_reg_out;
 			end
 
 			if (i==6) begin
-				register start_reg(data_writeReg, start, clock, select_reg[i], ctrl_reset);
-				tri_state tri_state_start1(start, select_read1[i], data_readRegA);
-				tri_state tri_state_start2(start, select_read2[i], data_readRegB);
+				register start_reg(data_writeReg, start_reg_out, clock, select_reg[i], ctrl_reset);
+				tri_state tri_state_start1(start_reg_out, select_read1[i], data_readRegA);
+				tri_state tri_state_start2(start_reg_out, select_read2[i], data_readRegB);
+				assign start = start_reg_out;
 			end
 
 			if (i==9) begin
-				wire [31:0] eoc_reg_out;
-				ila_0 debug(.clk(clock), .probe0(eoc_reg_out), .probe1(eoc));
 				register eoc_reg(eoc, eoc_reg_out, clock, 1'b1, ctrl_reset);
 				tri_state tri_state_eoc1(eoc_reg_out, select_read1[i], data_readRegA);
 				tri_state tri_state_eoc2(eoc_reg_out, select_read2[i], data_readRegB);
-
 			end
 
 			if(i != 5 && i !=6 && i !=9) begin

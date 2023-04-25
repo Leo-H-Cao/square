@@ -96,7 +96,8 @@ module VGAController(
 	assign player = proc_player[0];
 	assign adc_start = proc_start[0];
 	assign proc_eoc = eoc;
-	
+
+
 	always @(posedge clk)begin
 		if  (screenEnd) begin
 			if (player & startGame) begin

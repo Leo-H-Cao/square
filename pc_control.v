@@ -24,7 +24,7 @@ module pc_control(next_pc, branch_or_jump_pc, cur_pc, immediate_sx, dx_out_pc, d
     wire [31:0] next_pc_mux_out;
     assign next_pc_select = dx_out_ir[29:27];
     wire [31:0] bne_pc, blt_pc;
-    assign bne_pc = alu_INE ? branch_pc : pc_plus_1;
+    assign bne_pc = alu_INE || !alu_INE && dx_out_ir[31:27] == 5'b11010 ? branch_pc : pc_plus_1;
     assign blt_pc = rd_ILT_rs ? branch_pc : pc_plus_1;
     mux_8 pc_mux(next_pc_mux_out, next_pc_select, pc_plus_1, T, bne_pc, T, rd_val, pc_plus_1, blt_pc, pc_plus_1);
 
@@ -35,6 +35,6 @@ module pc_control(next_pc, branch_or_jump_pc, cur_pc, immediate_sx, dx_out_pc, d
     // if bex instruction, jump if rstatus != 0
     assign next_pc = (is_bex && rd_val != 0) ? T : next_pc_mux_out;
 
-    assign branch_or_jump_pc = next_pc_select == 3'b001 || (next_pc_select == 3'b010 && alu_INE) || next_pc_select == 3'b011 || next_pc_select == 3'b100 || (next_pc_select == 3'b110 && rd_ILT_rs) || (is_bex && rd_val != 0);
+    assign branch_or_jump_pc = next_pc_select == 3'b001 || (next_pc_select == 3'b010 && alu_INE) || (next_pc_select == 3'b010 && (dx_out_ir[31:27] == 5'b11010 && !alu_INE)) || next_pc_select == 3'b011 || next_pc_select == 3'b100 || (next_pc_select == 3'b110 && rd_ILT_rs) || (is_bex && rd_val != 0);
     
 endmodule

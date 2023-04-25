@@ -113,9 +113,9 @@ module processor(
     wire x_i_type_ins, x_r_type_ins, x_branch_op;
     wire[4:0] x_opcode;
     assign x_opcode = dx_out_ir[31:27];
-    assign x_i_type_ins = x_opcode == 5'b00110 || x_opcode == 5'b00010 || x_opcode == 5'b00111 || x_opcode == 5'b01000 || x_opcode == 5'b00101;
+    assign x_i_type_ins = x_opcode == 5'b00110 || x_opcode == 5'b00010 || x_opcode == 5'b00111 || x_opcode == 5'b01000 || x_opcode == 5'b00101 || x_opcode == 5'b11010;
     assign x_r_type_ins = x_opcode == 5'b00000;
-    assign x_branch_op = x_opcode == 5'b00010 || x_opcode == 5'b00110;
+    assign x_branch_op = x_opcode == 5'b00010 || x_opcode == 5'b00110 || x_opcode == 5'b11010;
 
     // handle setx instruction (need to propagate sx immediate)
     wire x_setx_ins;
