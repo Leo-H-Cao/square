@@ -16,7 +16,6 @@ module VGAController(
 	output player,
 	input startGame,
 	input eoc,
-	output adc_start
 	);
 	
 	assign left = sw[3];
@@ -44,7 +43,11 @@ module VGAController(
 		LEFT_SCORE_X = 20,
 		LEFT_SCORE_Y = 20,
 		RIGHT_SCORE_X = 590,
-		RIGHT_SCORE_Y = 20;
+		RIGHT_SCORE_Y = 20,
+		TITLE_X = 95,
+		TITLE_WIDTH = 450,
+		TITLE_Y = 30,
+		TITLE_HEIGHT = 150;
 
 	wire active, screenEnd;
 	wire[9:0] x;
@@ -75,6 +78,12 @@ module VGAController(
 	wire[8:0] rightScoreTopBound = RIGHT_SCORE_Y;
 	wire[8:0] rightScoreBottomBound = RIGHT_SCORE_Y + SQUARE_DIM;
 	assign showRightScoreHere = (rightScoreLeftBound < x & x < rightScoreRightBound & rightScoreTopBound < y & y < rightScoreBottomBound) & rightScoreSpriteData;
+
+	wire[9:0] titleLeftBound = TITLE_X;
+	wire[9:0] titleRightBound = TITLE_X + TITLE_WIDTH;
+	wire[8:0] titleTopBound = TITLE_Y;
+	wire[8:0] titleBottomBound = TITLE_Y + TITLE_HEIGHT;
+	assign showTitleHere = (titleLeftBound < x & x < titleRightBound & titleTopBound < y & y < titleBottomBound) & spriteData_title & ~startGame;
 	
 	reg [7:0] leftsc = 8'b0; 
 	reg [7:0] rightsc = 8'b0;
@@ -178,36 +187,6 @@ module VGAController(
 		.dataOut(colorData),				       // Color at current pixel
 		.wEn(1'b0)); 						       // We're always reading
 
-	// //left score sprite
-	// wire[17:0] spriteAddress_score_left;  	 // Image address for the image data
-	// wire spriteData_score_left; 	 // Color address for the color palette
-	// assign spriteAddress_score_left = (right_sc)*2500+ x-leftScoreLeftBound + 50*(y-leftScoreTopBound);			
-	// VGARAM #(		
-	// 	.DEPTH(50*50*37), 				     // Set RAM depth to contain every pixel
-	// 	.DATA_WIDTH(1),      // Set data width according to the color palette
-	// 	.ADDRESS_WIDTH(18),     // Set address with according to the pixel count
-	// 	.MEMFILE({FILES_PATH, "sprites.mem"})) // Memory initialization
-	// SpriteDataScoreLeft(
-	// 	.clk(clk), 						 // Falling edge of the 100 MHz clk
-	// 	.addr(spriteAddress_score_left),					 // Image data address
-	// 	.dataOut(spriteData_score_left),				 // Color palette address
-	// 	.wEn(1'b0));
-
-	// //right score sprite
-	// wire[17:0] spriteAddress_right_score;  	 // Image address for the image data
-	// wire spriteData_right_score; 	 // Color address for the color palette
-	// assign spriteAddress_right_score = (left_sc)*2500+ x-rightScoreLeftBound + 50*(y-rightScoreTopBound);			
-	// VGARAM #(		
-	// 	.DEPTH(50*50*37), 				     // Set RAM depth to contain every pixel
-	// 	.DATA_WIDTH(1),      // Set data width according to the color palette
-	// 	.ADDRESS_WIDTH(18),     // Set address with according to the pixel count
-	// 	.MEMFILE({FILES_PATH, "sprites.mem"})) // Memory initialization
-	// SpriteDataScoreRight(
-	// 	.clk(clk), 						 // Falling edge of the 100 MHz clk
-	// 	.addr(spriteAddress_right_score),					 // Image data address
-	// 	.dataOut(spriteData_right_score),				 // Color palette address
-	// 	.wEn(1'b0));
-		
 	// ball sprite
 	// wire[17:0] spriteAddress;  	 // Image address for the image data
 	wire spriteData; 	 // Color address for the color palette
@@ -231,6 +210,21 @@ module VGAController(
 	wire [17:0] realSpriteAddress;
 	assign realSpriteAddress = (xLeftBound < x & x < xRightBound & yTopBound < y & y < yBottomBound) ? (36)*2500+ x-xLeftBound + 50*(y-yTopBound) : ((leftScoreLeftBound < x & x < leftScoreRightBound & leftScoreTopBound < y & y < leftScoreBottomBound) ? (right_sc)*2500+ x-leftScoreLeftBound + 50*(y-leftScoreTopBound) : (left_sc)*2500+ x-rightScoreLeftBound + 50*(y-rightScoreTopBound));
 
+	//title
+	wire[17:0] spriteAddress_title;  	 // Image address for the image data
+	wire spriteData_title; 	 // Color address for the color palette
+	assign spriteAddress_title =  x-titleLeftBound + 450*(y-titleTopBound);			
+	VGARAM #(		
+		.DEPTH(450*150), 				     // Set RAM depth to contain every pixel
+		.DATA_WIDTH(1),      // Set data width according to the color palette
+		.ADDRESS_WIDTH(18),     // Set address with according to the pixel count
+		.MEMFILE({FILES_PATH, "title.mem"})) // Memory initialization
+	SpriteDataScoreRight(
+		.clk(clk), 						 // Falling edge of the 100 MHz clk
+		.addr(spriteAddress_title),					 // Image data address
+		.dataOut(spriteData_title),				 // Color palette address
+		.wEn(1'b0));
+		
 
 
 	//start screen
@@ -263,8 +257,8 @@ module VGAController(
 
 	// Assign to output color from register if active
 	wire[BITS_PER_COLOR-1:0] colorOut; 			  // Output color 
-	// assign colorOut = (active & ~startGame) ? colorDataStartScreen : ((active & ~showSquareHere & ~showLeftScoreHere & ~showRightScoreHere) ? colorData : 12'd0); // When not active, output black
-	assign colorOut = (active & ~showSquareHere & ~showLeftScoreHere & ~showRightScoreHere) ? colorData : 12'd0;
+	// When not active, output black
+	assign colorOut = (active & ~showSquareHere & ~showLeftScoreHere & ~showRightScoreHere & ~showTitleHere) ? colorData : 12'd0;
 	
 
 	// Quickly assign the output colors to their channels using concatenation
