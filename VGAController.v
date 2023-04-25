@@ -13,8 +13,10 @@ module VGAController(
 	output [7:0] lefts,
 	output [7:0] rights,
 	input [7:0] moveSpeed,
-	input player,
-	input startGame
+	output player,
+	input startGame,
+	input eoc,
+	output adc_start
 	);
 	
 	assign left = sw[3];
@@ -51,8 +53,8 @@ module VGAController(
 	reg[9:0] squareX;
 	reg[8:0] squareY;
 	initial begin
-	   assign squareX = 270;
-	   assign squareY = 300;
+		squareX = 270;
+		squareY = 215;
 	end
 	
 	wire[9:0] xLeftBound = squareX;
@@ -60,27 +62,27 @@ module VGAController(
 	wire[8:0] yTopBound = squareY;
 	wire[8:0] yBottomBound = squareY + SQUARE_DIM;
 	
-	assign showSquareHere = (xLeftBound < x & x < xRightBound & yTopBound < y & y < yBottomBound) & spriteData;
+	assign showSquareHere = (xLeftBound < x & x < xRightBound & yTopBound < y & y < yBottomBound) & ballSpriteData;
 
 	wire[9:0] leftScoreLeftBound = LEFT_SCORE_X;
 	wire[9:0] leftScoreRightBound = LEFT_SCORE_X + SQUARE_DIM;
 	wire[8:0] leftScoreTopBound = LEFT_SCORE_Y;
 	wire[8:0] leftScoreBottomBound = LEFT_SCORE_Y + SQUARE_DIM;
-	assign showLeftScoreHere = (leftScoreLeftBound < x & x < leftScoreRightBound & leftScoreTopBound < y & y < leftScoreBottomBound) & spriteData_score_left;
+	assign showLeftScoreHere = (leftScoreLeftBound < x & x < leftScoreRightBound & leftScoreTopBound < y & y < leftScoreBottomBound) & leftScoreSpriteData;
 
 	wire[9:0] rightScoreLeftBound = RIGHT_SCORE_X;
 	wire[9:0] rightScoreRightBound = RIGHT_SCORE_X + SQUARE_DIM;
 	wire[8:0] rightScoreTopBound = RIGHT_SCORE_Y;
 	wire[8:0] rightScoreBottomBound = RIGHT_SCORE_Y + SQUARE_DIM;
-	assign showRightScoreHere = (rightScoreLeftBound < x & x < rightScoreRightBound & rightScoreTopBound < y & y < rightScoreBottomBound) & spriteData_right_score;
+	assign showRightScoreHere = (rightScoreLeftBound < x & x < rightScoreRightBound & rightScoreTopBound < y & y < rightScoreBottomBound) & rightScoreSpriteData;
 	
 	reg [7:0] leftsc = 8'b0; 
 	reg [7:0] rightsc = 8'b0;
-	wire [31:0] left_sc, right_sc, l, r;
+	wire [31:0] left_sc, right_sc;
 	assign left_sc = leftsc;
 	assign right_sc = rightsc;
 	assign lefts = moveSpeed[7:0];
-	assign rights = r[7:0];
+	assign rights = 8'b0;
     
     reg flag;
 
@@ -88,7 +90,12 @@ module VGAController(
 	assign sq_left = squareX;
 	assign sq_right = squareX+SQUARE_DIM;
 
-	Wrapper wr(clk, reset, sq_left, sq_right, l, r);
+	wire [31:0] proc_player, proc_start, proc_eoc;
+
+	Wrapper wr(clk, reset, proc_player, proc_start, proc_eoc);
+	assign player = proc_player[0];
+	assign adc_start = proc_start[0];
+	assign proc_eoc = eoc;
 	
 	always @(posedge clk)begin
 		if  (screenEnd) begin
@@ -97,6 +104,12 @@ module VGAController(
 			end else if (!player & startGame) begin
 				squareX = squareX + moveSpeed/32;
 			end 
+
+			// if (left) begin
+			// 	squareX = squareX - 1;
+			// end else if (right) begin
+			// 	squareX = squareX + 1;
+			// end
 			
 			if (squareX < 160 & !flag) begin
 				rightsc <= rightsc + 1;
@@ -149,52 +162,7 @@ module VGAController(
 		.addr(imgAddress),					 // Image data address
 		.dataOut(colorAddr),				 // Color palette address
 		.wEn(1'b0)); 						 // We're always reading
-
-	//left score sprite
-	wire[17:0] spriteAddress_score_left;  	 // Image address for the image data
-	wire spriteData_score_left; 	 // Color address for the color palette
-	assign spriteAddress_score_left = (right_sc)*2500+ x-leftScoreLeftBound + 50*(y-leftScoreTopBound);			
-	VGARAM #(		
-		.DEPTH(50*50*37), 				     // Set RAM depth to contain every pixel
-		.DATA_WIDTH(1),      // Set data width according to the color palette
-		.ADDRESS_WIDTH(18),     // Set address with according to the pixel count
-		.MEMFILE({FILES_PATH, "sprites.mem"})) // Memory initialization
-	SpriteDataScoreLeft(
-		.clk(clk), 						 // Falling edge of the 100 MHz clk
-		.addr(spriteAddress_score_left),					 // Image data address
-		.dataOut(spriteData_score_left),				 // Color palette address
-		.wEn(1'b0));
-
-	//right score sprite
-	wire[17:0] spriteAddress_right_score;  	 // Image address for the image data
-	wire spriteData_right_score; 	 // Color address for the color palette
-	assign spriteAddress_right_score = (left_sc)*2500+ x-rightScoreLeftBound + 50*(y-rightScoreTopBound);			
-	VGARAM #(		
-		.DEPTH(50*50*37), 				     // Set RAM depth to contain every pixel
-		.DATA_WIDTH(1),      // Set data width according to the color palette
-		.ADDRESS_WIDTH(18),     // Set address with according to the pixel count
-		.MEMFILE({FILES_PATH, "sprites.mem"})) // Memory initialization
-	SpriteDataScoreRight(
-		.clk(clk), 						 // Falling edge of the 100 MHz clk
-		.addr(spriteAddress_right_score),					 // Image data address
-		.dataOut(spriteData_right_score),				 // Color palette address
-		.wEn(1'b0));
 		
-	// ball sprite
-	wire[17:0] spriteAddress;  	 // Image address for the image data
-	wire spriteData; 	 // Color address for the color palette
-	assign spriteAddress = (36)*2500+ x-xLeftBound + 50*(y-yTopBound);			
-	VGARAM #(		
-		.DEPTH(50*50*37), 				     // Set RAM depth to contain every pixel
-		.DATA_WIDTH(1),      // Set data width according to the color palette
-		.ADDRESS_WIDTH(18),     // Set address with according to the pixel count
-		.MEMFILE({FILES_PATH, "sprites.mem"})) // Memory initialization
-	SpriteData(
-		.clk(clk), 						 // Falling edge of the 100 MHz clk
-		.addr(spriteAddress),					 // Image data address
-		.dataOut(spriteData),				 // Color palette address
-		.wEn(1'b0));
-
 	// Color Palette to Map Color Address to 12-Bit Color
 	wire[BITS_PER_COLOR-1:0] colorData; // 12-bit color data at current pixel
 
@@ -208,6 +176,59 @@ module VGAController(
 		.addr(colorAddr),					       // Address from the ImageData RAM
 		.dataOut(colorData),				       // Color at current pixel
 		.wEn(1'b0)); 						       // We're always reading
+
+	// //left score sprite
+	// wire[17:0] spriteAddress_score_left;  	 // Image address for the image data
+	// wire spriteData_score_left; 	 // Color address for the color palette
+	// assign spriteAddress_score_left = (right_sc)*2500+ x-leftScoreLeftBound + 50*(y-leftScoreTopBound);			
+	// VGARAM #(		
+	// 	.DEPTH(50*50*37), 				     // Set RAM depth to contain every pixel
+	// 	.DATA_WIDTH(1),      // Set data width according to the color palette
+	// 	.ADDRESS_WIDTH(18),     // Set address with according to the pixel count
+	// 	.MEMFILE({FILES_PATH, "sprites.mem"})) // Memory initialization
+	// SpriteDataScoreLeft(
+	// 	.clk(clk), 						 // Falling edge of the 100 MHz clk
+	// 	.addr(spriteAddress_score_left),					 // Image data address
+	// 	.dataOut(spriteData_score_left),				 // Color palette address
+	// 	.wEn(1'b0));
+
+	// //right score sprite
+	// wire[17:0] spriteAddress_right_score;  	 // Image address for the image data
+	// wire spriteData_right_score; 	 // Color address for the color palette
+	// assign spriteAddress_right_score = (left_sc)*2500+ x-rightScoreLeftBound + 50*(y-rightScoreTopBound);			
+	// VGARAM #(		
+	// 	.DEPTH(50*50*37), 				     // Set RAM depth to contain every pixel
+	// 	.DATA_WIDTH(1),      // Set data width according to the color palette
+	// 	.ADDRESS_WIDTH(18),     // Set address with according to the pixel count
+	// 	.MEMFILE({FILES_PATH, "sprites.mem"})) // Memory initialization
+	// SpriteDataScoreRight(
+	// 	.clk(clk), 						 // Falling edge of the 100 MHz clk
+	// 	.addr(spriteAddress_right_score),					 // Image data address
+	// 	.dataOut(spriteData_right_score),				 // Color palette address
+	// 	.wEn(1'b0));
+		
+	// ball sprite
+	// wire[17:0] spriteAddress;  	 // Image address for the image data
+	wire spriteData; 	 // Color address for the color palette
+	// assign spriteAddress = (36)*2500+ x-xLeftBound + 50*(y-yTopBound);			
+	VGARAM #(		
+		.DEPTH(50*50*37), 				     // Set RAM depth to contain every pixel
+		.DATA_WIDTH(1),      // Set data width according to the color palette
+		.ADDRESS_WIDTH(18),     // Set address with according to the pixel count
+		.MEMFILE({FILES_PATH, "sprites.mem"})) // Memory initialization
+	SpriteData(
+		.clk(clk), 						 // Falling edge of the 100 MHz clk
+		.addr(realSpriteAddress),					 // Image data address
+		.dataOut(spriteData),				 // Color palette address
+		.wEn(1'b0));
+
+	wire ballSpriteData, rightScoreSpriteData, leftScoreSpriteData;
+	assign ballSpriteData = (xLeftBound < x & x < xRightBound & yTopBound < y & y < yBottomBound) ? spriteData : 1'b0;
+	assign rightScoreSpriteData = (rightScoreLeftBound < x & x < rightScoreRightBound & rightScoreTopBound < y & y < rightScoreBottomBound) ? spriteData : 1'b0;
+	assign leftScoreSpriteData = (leftScoreLeftBound < x & x < leftScoreRightBound & leftScoreTopBound < y & y < leftScoreBottomBound) ? spriteData : 1'b0;
+	
+	wire [17:0] realSpriteAddress;
+	assign realSpriteAddress = (xLeftBound < x & x < xRightBound & yTopBound < y & y < yBottomBound) ? (36)*2500+ x-xLeftBound + 50*(y-yTopBound) : ((leftScoreLeftBound < x & x < leftScoreRightBound & leftScoreTopBound < y & y < leftScoreBottomBound) ? (right_sc)*2500+ x-leftScoreLeftBound + 50*(y-leftScoreTopBound) : (left_sc)*2500+ x-rightScoreLeftBound + 50*(y-rightScoreTopBound));
 
 
 
