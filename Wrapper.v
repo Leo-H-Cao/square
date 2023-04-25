@@ -24,9 +24,9 @@
  *
  **/
 
-module Wrapper (clock, reset, player, start, eoc);
+module Wrapper (clock, reset, player, eoc);
 	input clock, reset;
-	output [31:0] player, start;
+	output [31:0] player;
 	input [31:0] eoc;
 
 	wire rwe, mwe;
@@ -36,7 +36,7 @@ module Wrapper (clock, reset, player, start, eoc);
 		memAddr, memDataIn, memDataOut;
 
 	// ADD YOUR MEMORY FILE HERE
-	localparam INSTR_FILE = "ball";
+	localparam INSTR_FILE = "ballr5r9";
 	
 	// Main Processing Unit
 	processor CPU(.clock(clock), .reset(reset), 
@@ -65,7 +65,7 @@ module Wrapper (clock, reset, player, start, eoc);
 		.ctrl_writeReg(rd),
 		.ctrl_readRegA(rs1), .ctrl_readRegB(rs2), 
 		.data_writeReg(rData), .data_readRegA(regA), .data_readRegB(regB),
-		.player(player), .start(start), .eoc(eoc));
+		.player(player), .eoc(eoc));
 						
 	// Processor Memory (RAM)
 	RAM ProcMem(.clk(clock), 

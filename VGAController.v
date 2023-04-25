@@ -92,9 +92,9 @@ module VGAController(
 
 	wire [31:0] proc_player, proc_start, proc_eoc;
 
-	Wrapper wr(clk, reset, proc_player, proc_start, proc_eoc);
+	Wrapper wr(clk, reset, proc_player, proc_eoc);
 	assign player = proc_player[0];
-	assign adc_start = proc_start[0];
+	// assign adc_start = proc_start[0];
 	assign proc_eoc = eoc;
 
 
@@ -102,7 +102,7 @@ module VGAController(
 		if  (screenEnd) begin
 			if (player & startGame) begin
 				squareX = squareX - moveSpeed/32;
-			end else if (!player & startGame) begin
+			end else if (~player & startGame) begin
 				squareX = squareX + moveSpeed/32;
 			end 
 

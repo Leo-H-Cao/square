@@ -3,7 +3,7 @@ module regfile (
 	ctrl_writeEnable, ctrl_reset, ctrl_writeReg,
 	ctrl_readRegA, ctrl_readRegB, data_writeReg,
 	data_readRegA, data_readRegB,
-	player, start, eoc
+	player, eoc
 );
 
 	input clock, ctrl_writeEnable, ctrl_reset;
@@ -12,7 +12,7 @@ module regfile (
 
 	output [31:0] data_readRegA, data_readRegB;
 
-	output [31:0] player, start;
+	output [31:0] player;
 	input [31:0] eoc;
 
 	// add your code here
@@ -35,8 +35,8 @@ module regfile (
 
 	wire [31:0] player_reg_out;
 	wire [31:0] eoc_reg_out;
-	wire [31:0] start_reg_out;
-	ila_0 debug(.clk(clock), .probe0(player_reg_out), .probe1(data_writeReg), .probe2(select_reg), .probe3(start_reg_out), .probe4(eoc_reg_out), .probe5(eoc), .probe6(ctrl_writeEnable), .probe7(clock));
+	// wire [31:0] start_reg_out;
+	// ila_0 debug(.clk(clock), .probe0(player_reg_out), .probe1(data_writeReg), .probe2(select_reg), .probe3(start_reg_out), .probe4(eoc_reg_out), .probe5(eoc), .probe6(ctrl_writeEnable), .probe7(clock));
 
 	genvar i;
 	generate
@@ -49,12 +49,12 @@ module regfile (
 				assign player = player_reg_out;
 			end
 
-			if (i==6) begin
-				register start_reg(data_writeReg, start_reg_out, clock, select_reg[i], ctrl_reset);
-				tri_state tri_state_start1(start_reg_out, select_read1[i], data_readRegA);
-				tri_state tri_state_start2(start_reg_out, select_read2[i], data_readRegB);
-				assign start = start_reg_out;
-			end
+			// if (i==6) begin
+			// 	register start_reg(data_writeReg, start_reg_out, clock, select_reg[i], ctrl_reset);
+			// 	tri_state tri_state_start1(start_reg_out, select_read1[i], data_readRegA);
+			// 	tri_state tri_state_start2(start_reg_out, select_read2[i], data_readRegB);
+			// 	assign start = start_reg_out;
+			// end
 
 			if (i==9) begin
 				register eoc_reg(eoc, eoc_reg_out, clock, 1'b1, ctrl_reset);
@@ -62,7 +62,7 @@ module regfile (
 				tri_state tri_state_eoc2(eoc_reg_out, select_read2[i], data_readRegB);
 			end
 
-			if(i != 5 && i !=6 && i !=9) begin
+			if(i != 5  && i !=9) begin
 				wire [31:0] reg_out;
 				register a_reg(data_writeReg, reg_out, clock, select_reg[i], ctrl_reset);
 				tri_state tri_state5(reg_out, select_read1[i], data_readRegA);
